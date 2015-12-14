@@ -5,7 +5,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialog : IProgressDialog {
+    public class ProgressDialog : ProgressDialog {
 
         public ProgressDialog() {
             this.MaskType = MaskType.Black;

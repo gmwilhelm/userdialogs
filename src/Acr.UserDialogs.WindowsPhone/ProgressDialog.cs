@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialog : IProgressDialog {
+    public class ProgressDialog : ProgressDialog {
         private readonly ProgressPopUp progress = new ProgressPopUp();
 
         #region IProgressDialog Members

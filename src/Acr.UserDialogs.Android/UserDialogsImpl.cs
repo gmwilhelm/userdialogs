@@ -40,7 +40,14 @@ namespace Acr.UserDialogs {
             //var txt = new TextView(context);
 
             Utils.RequestMainThread(() =>
+
+/* Unmerged change from project 'Acr.UserDialogs.Android.AppCompat'
+Before:
                 new AlertDialog
+After:
+                new Android.Support.V7.App.AlertDialog
+*/
+                new Android.App.AlertDialog
                     .Builder(this.GetTopActivity())
                     .SetCancelable(false)
                     .SetMessage(config.Message)
@@ -52,7 +59,14 @@ namespace Acr.UserDialogs {
 
 
         public override void ActionSheet(ActionSheetConfig config) {
+
+/* Unmerged change from project 'Acr.UserDialogs.Android.AppCompat'
+Before:
             var dlg = new AlertDialog
+After:
+            var dlg = new Android.Support.V7.App.AlertDialog
+*/
+            var dlg = new Android.App.AlertDialog
                 .Builder(this.GetTopActivity())
 				.SetCancelable(false)
 				.SetTitle(config.Title);
@@ -82,7 +96,14 @@ namespace Acr.UserDialogs {
 
         public override void Confirm(ConfirmConfig config) {
             Utils.RequestMainThread(() =>
+
+/* Unmerged change from project 'Acr.UserDialogs.Android.AppCompat'
+Before:
                 new AlertDialog
+After:
+                new Android.Support.V7.App.AlertDialog
+*/
+                new Android.App.AlertDialog
                     .Builder(this.GetTopActivity())
                     .SetCancelable(false)
                     .SetMessage(config.Message)
@@ -117,7 +138,14 @@ namespace Acr.UserDialogs {
             layout.AddView(txtPass, ViewGroup.LayoutParams.MatchParent);
 
             Utils.RequestMainThread(() =>
+
+/* Unmerged change from project 'Acr.UserDialogs.Android.AppCompat'
+Before:
                 new AlertDialog
+After:
+                new Android.Support.V7.App.AlertDialog
+*/
+                new Android.App.AlertDialog
                     .Builder(context)
                     .SetCancelable(false)
                     .SetTitle(config.Title)
@@ -146,7 +174,14 @@ namespace Acr.UserDialogs {
 
                 this.SetInputType(txt, config.InputType);
 
+
+/* Unmerged change from project 'Acr.UserDialogs.Android.AppCompat'
+Before:
                 var builder = new AlertDialog
+After:
+                var builder = new Android.Support.V7.App.AlertDialog
+*/
+                var builder = new Android.App.AlertDialog
                     .Builder(activity)
                     .SetCancelable(false)
                     .SetMessage(config.Message)
@@ -250,7 +285,7 @@ namespace Acr.UserDialogs {
         }
 #endif
 
-        protected override IProgressDialog CreateDialogInstance() {
+        protected override ProgressDialog CreateDialogInstance() {
 			return new ProgressDialog(this.GetTopActivity());
         }
 

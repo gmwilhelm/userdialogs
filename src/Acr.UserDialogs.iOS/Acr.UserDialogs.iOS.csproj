@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AcrMessageBarStyleSheet.cs" />
+    <Compile Include="AlertDialogImpl.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MessageBar\MessageBarManager.cs" />
     <Compile Include="MessageBar\MessageBarMessageType.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="MessageBar\MessageBarViewController.cs" />
     <Compile Include="MessageBar\MessageView.cs" />
     <Compile Include="MessageBar\MessageWindow.cs" />
+    <Compile Include="PromptDialogImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProgressDialog.cs" />
     <Compile Include="UserDialogsImpl.cs" />
@@ -93,7 +95,7 @@
   <ItemGroup>
     <XamarinComponentReference Include="btprogresshud">
       <Visible>False</Visible>
-      <Version>1.19</Version>
+      <Version>1.20</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="..\Acr.UserDialogs.Shared\Acr.UserDialogs.Shared.projitems" Label="Shared" Condition="Exists('..\Acr.UserDialogs.Shared\Acr.UserDialogs.Shared.projitems')" />

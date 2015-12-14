@@ -26,16 +26,7 @@ namespace Acr.UserDialogs {
         public static bool ShowToastOnBottom { get; set; }
 
         public override void Alert(AlertConfig config) {
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
-                var alert = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
-                alert.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnOk?.Invoke()));
-                this.Present(alert);
-            }
-            else {
-                var dlg = new UIAlertView(config.Title ?? String.Empty, config.Message, null, null, config.OkText);
-                dlg.Clicked += (s, e) => config.OnOk?.Invoke();
-                this.Present(dlg);
-            }
+
         }
 
 
@@ -156,7 +147,7 @@ namespace Acr.UserDialogs {
         }
 
 
-		protected virtual void AddActionSheetOption(ActionSheetOption opt, UIAlertController controller, UIAlertActionStyle style, IBitmap image = null) {
+		protected virtual void AddActionSheetOption(ActionOption opt, UIAlertController controller, UIAlertActionStyle style, IBitmap image = null) {
             var alertAction = UIAlertAction.Create(opt.Text, style, x => opt.Action?.Invoke());
 
             if (opt.ItemIcon == null && image != null)
@@ -169,7 +160,7 @@ namespace Acr.UserDialogs {
 		}
 
 
-        protected override IProgressDialog CreateDialogInstance() {
+        protected override ProgressDialog CreateDialogInstance() {
             return new ProgressDialog();
         }
 

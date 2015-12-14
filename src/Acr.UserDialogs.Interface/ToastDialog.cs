@@ -5,18 +5,20 @@ using Splat;
 
 namespace Acr.UserDialogs {
 
-    public enum ToastEvent {
-        Info,
-        Warn,
-        Error,
-        Success
-    }
+    public abstract class ToastDialog : Dialog {
+
+        public virtual string Title { get; set; }
+        public virtual string Description { get; set; }
+
+        //ToastEvent Event { get; }
+        public virtual Color BackgroundColor { get; set; }
+        public virtual IBitmap Icon { get; set; }
+
+        public virtual Color TextColor { get; set; }
+        public virtual TimeSpan Duration { get; set; }
+        public virtual Action Action { get; set; }
 
 
-    public class ToastConfig {
-
-        // icons only on ios
-        // action text only on android, tap action is on all!
 
         public static IBitmap InfoIcon { get; set; }
         public static Color InfoBackgroundColor { get; set; } = Color.Gainsboro; //Color.FromArgb(96, 0, 482, 1);
@@ -35,16 +37,27 @@ namespace Acr.UserDialogs {
         public static Color ErrorTextColor { get; set; } = Color.White;
 
         public static TimeSpan DefaultDuration { get; set; } = TimeSpan.FromSeconds(2.5);
+    }
+}
+/*
 
+        public static IBitmap InfoIcon { get; set; }
+        public static Color InfoBackgroundColor { get; set; } = Color.Gainsboro; //Color.FromArgb(96, 0, 482, 1);
+        public static Color InfoTextColor { get; set; } = Color.Black;
 
-        public ToastEvent Event { get; }
-        public Color BackgroundColor { get; set; }
-        public IBitmap Icon { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public Color TextColor { get; set; }
-        public TimeSpan Duration { get; set; }
-        public Action Action { get; set; }
+        public static IBitmap SuccessIcon { get; set; }
+        public static Color SuccessBackgroundColor { get; set; } = Color.LawnGreen; //Color.FromArgb(96, 0, 831, 176);
+        public static Color SuccessTextColor { get; set; } = Color.Black;
+
+        public static IBitmap WarnIcon { get; set; }
+        public static Color WarnBackgroundColor { get; set; } = Color.Coral;
+        public static Color WarnTextColor { get; set; } = Color.White;
+
+        public static IBitmap ErrorIcon { get; set; }
+        public static Color ErrorBackgroundColor { get; set; } = Color.Red;
+        public static Color ErrorTextColor { get; set; } = Color.White;
+
+        public static TimeSpan DefaultDuration { get; set; } = TimeSpan.FromSeconds(2.5);
 
 
         public ToastConfig(ToastEvent @event, string title, string description = null) {
@@ -115,5 +128,4 @@ namespace Acr.UserDialogs {
             this.Action = action;
             return this;
         }
-    }
-}
+*/

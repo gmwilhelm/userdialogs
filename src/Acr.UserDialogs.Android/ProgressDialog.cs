@@ -6,7 +6,7 @@ using Utils = Acr.Support.Android.Extensions;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialog : IProgressDialog {
+    public class ProgressDialog : ProgressDialog {
 		readonly Activity activity;
 
 

@@ -16,7 +16,7 @@ namespace Acr.UserDialogs {
         public abstract void ShowError(string message, int timeoutMillis);
         public abstract void ShowSuccess(string message, int timeoutMillis);
         public abstract void Toast(ToastConfig config);
-        protected abstract IProgressDialog CreateDialogInstance();
+        protected abstract ProgressDialog CreateDialogInstance();
 
 
         public virtual Task<string> ActionSheetAsync(string title, string cancel, string destructive, params string[] buttons) {
@@ -48,7 +48,7 @@ namespace Acr.UserDialogs {
         }
 
 
-        private IProgressDialog loading;
+        private ProgressDialog loading;
 		public virtual void ShowLoading(string title, MaskType? maskType) {
             if (this.loading == null)
 				this.loading = this.Loading(title, null, null, true, maskType);
@@ -61,7 +61,7 @@ namespace Acr.UserDialogs {
         }
 
 
-		public virtual IProgressDialog Loading(string title, Action onCancel, string cancelText, bool show, MaskType? maskType) {
+		public virtual ProgressDialog Loading(string title, Action onCancel, string cancelText, bool show, MaskType? maskType) {
             return this.Progress(new ProgressDialogConfig {
                 Title = title ?? ProgressDialogConfig.DefaultTitle,
                 AutoShow = show,
@@ -73,7 +73,7 @@ namespace Acr.UserDialogs {
         }
 
 
-		public virtual IProgressDialog Progress(string title, Action onCancel, string cancelText, bool show, MaskType? maskType) {
+		public virtual ProgressDialog Progress(string title, Action onCancel, string cancelText, bool show, MaskType? maskType) {
 			return this.Progress(new ProgressDialogConfig {
                 Title = title ?? ProgressDialogConfig.DefaultTitle,
                 AutoShow = show,
@@ -85,7 +85,7 @@ namespace Acr.UserDialogs {
         }
 
 
-		public virtual IProgressDialog Progress(ProgressDialogConfig config) {
+		public virtual ProgressDialog Progress(ProgressDialogConfig config) {
             var dlg = this.CreateDialogInstance();
             dlg.Title = config.Title;
             dlg.IsDeterministic = config.IsDeterministic;

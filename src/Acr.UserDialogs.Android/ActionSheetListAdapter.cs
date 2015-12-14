@@ -8,7 +8,7 @@ using Splat;
 
 namespace Acr.UserDialogs {
 
-    public class ActionSheetListAdapter : ArrayAdapter<ActionSheetOption> {
+    public class ActionSheetListAdapter : ArrayAdapter<ActionOption> {
         readonly ActionSheetConfig config;
 
 

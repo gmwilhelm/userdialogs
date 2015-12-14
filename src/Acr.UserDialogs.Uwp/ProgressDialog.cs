@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialog : IProgressDialog, INotifyPropertyChanged {
+    public class ProgressDialog : ProgressDialog, INotifyPropertyChanged {
         readonly ProgressContentDialog dialog;
         Action cancelAction;
 

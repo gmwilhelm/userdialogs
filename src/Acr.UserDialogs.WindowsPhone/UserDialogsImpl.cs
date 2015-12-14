@@ -69,7 +69,7 @@ namespace Acr.UserDialogs {
                 if (txt == null)
                     return;
 
-                var action = txt.DataContext as ActionSheetOption;
+                var action = txt.DataContext as ActionOption;
                 action?.Action?.Invoke();
             };
             this.Dispatch(sheet.Show);
@@ -223,7 +223,7 @@ namespace Acr.UserDialogs {
         }
 
 
-        protected override IProgressDialog CreateDialogInstance() {
+        protected override ProgressDialog CreateDialogInstance() {
             return new ProgressDialog();
         }
 

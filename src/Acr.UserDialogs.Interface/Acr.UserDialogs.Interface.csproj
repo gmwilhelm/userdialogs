@@ -38,21 +38,20 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AbstractUserDialogs.cs" />
-    <Compile Include="ActionSheetConfig.cs" />
-    <Compile Include="ActionSheetOption.cs" />
-    <Compile Include="AlertConfig.cs" />
-    <Compile Include="ConfirmConfig.cs" />
+    <Compile Include="ActionOption.cs" />
+    <Compile Include="ActionSheetDialog.cs" />
+    <Compile Include="AlertDialog.cs" />
+    <Compile Include="LoginDialog.cs" />
+    <Compile Include="PromptDialog.cs" />
+    <Compile Include="Dialog.cs" />
     <Compile Include="InputType.cs" />
-    <Compile Include="IProgressDialog.cs" />
+    <Compile Include="ProgressDialog.cs" />
+    <Compile Include="ToastDialog.cs" />
     <Compile Include="IUserDialogs.cs" />
-    <Compile Include="LoginConfig.cs" />
     <Compile Include="LoginResult.cs" />
     <Compile Include="MaskType.cs" />
-    <Compile Include="ProgressDialogConfig.cs" />
-    <Compile Include="PromptConfig.cs" />
     <Compile Include="PromptResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToastConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">

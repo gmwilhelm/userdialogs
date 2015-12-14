@@ -1,15 +1,26 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace Acr.UserDialogs {
 
-    public class AlertConfig {
-        public static string DefaultOkText { get; set; } = "Ok";
+    public abstract class AlertDialog : Dialog {
 
-        public string OkText { get; set; }
-        public string Title { get; set; }
-        public string Message { get; set; }
-        public Action OnOk { get; set; }
+        public virtual string Title { get; set; }
+        public virtual string Message { get; set; }
+        public virtual ActionOption Ok { get; set; }
+        public virtual ActionOption Cancel { get; set; }
+        public abstract Task<bool> Request(CancellationToken? cancelToken = null);
+
+        public static string DefaultYes { get; set; } = "Yes";
+        public static string DefaultNo { get; set; } = "No";
+        public static string DefaultOkText { get; set; } = "Ok";
+        public static string DefaultCancelText { get; set; } = "Cancel";
+    }
+}
+/*
+
 
 
         public AlertConfig() {
@@ -39,5 +50,4 @@ namespace Acr.UserDialogs {
             this.OnOk = onOk;
             return this;
         }
-    }
-}
+*/
