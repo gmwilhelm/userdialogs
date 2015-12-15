@@ -7,42 +7,34 @@ using UIKit;
 namespace Acr.UserDialogs {
 
     public class ConfirmDialogImpl : ConfirmDialog {
+        TaskCompletionSource<bool> tcs;
+        UIAlertController alertCtrl;
+        UIAlertView alertView;
+
 
         public override async Task<bool> Request(CancellationToken? cancelToken = null) {
-            var tcs = new TaskCompletionSource<bool>();
+            this.tcs = new TaskCompletionSource<bool>();
+
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
-                var alert = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
-                alert.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => tcs.TrySetResult(true)));
-                alert.AddAction(UIAlertAction.Create(this.CancelText ?? DefaultCancelText, UIAlertActionStyle.Cancel, x => tcs.TrySetResult(false)));
+                this.alertCtrl = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
+                this.alertCtrl.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => this.tcs.TrySetResult(true)));
+                this.alertCtrl.AddAction(UIAlertAction.Create(this.CancelText ?? DefaultCancelText, UIAlertActionStyle.Cancel, x => this.tcs.TrySetResult(false)));
                 //this.Present(alert);
             }
             else {
-                var dlg = new UIAlertView(this.Title ?? String.Empty, this.Message, null, this.CancelText, this.OkText);
-                //dlg.Clicked += (s, e) => config.OnOk?.Invoke();
+                this.alertView = new UIAlertView(this.Title ?? String.Empty, this.Message, null, this.CancelText, this.OkText);
+                this.alertView.Clicked += (s, e) => {
+                    var ok = (int)this.alertView.CancelButtonIndex != (int)e.ButtonIndex;
+                    this.tcs.TrySetResult(ok);
+                };
                 //this.Present(dlg);
             }
-            return true;
+            return await this.tcs.Task;
         }
 
 
         protected override void Dispose(bool disposing) {
-
+            this.Cancel();
         }
     }
 }
-/*
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
-                var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
-                dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x => config.OnConfirm(false)));
-                dlg.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnConfirm(true)));
-                this.Present(dlg);
-            }
-            else {
-                var dlg = new UIAlertView(config.Title ?? String.Empty, config.Message, null, config.CancelText, config.OkText);
-                dlg.Clicked += (s, e) => {
-                    var ok = ((int)dlg.CancelButtonIndex != (int)e.ButtonIndex);
-                    config.OnConfirm(ok);
-                };
-                this.Present(dlg);
-            }
-*/

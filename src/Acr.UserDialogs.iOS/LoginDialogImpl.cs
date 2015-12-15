@@ -1,59 +1,76 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using UIKit;
 
 
 namespace Acr.UserDialogs {
 
     public class LoginDialogImpl : LoginDialog {
+        readonly AlertDialogManager<LoginResult> manager = new AlertDialogManager<LoginResult>();
 
-        public override Task<LoginResult> Request(CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
+
+        public override async Task<LoginResult> Request(CancellationToken? cancelToken = null) {
+            this.manager.AssertFree();
+
+            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+                this.Ver8();
+            else
+                this.Ver7();
+
+            var result = await this.manager.Tcs.Task;
+            return result;
         }
-    }
-}
-/*
+
+
+        protected virtual void Ver8() {
             UITextField txtUser = null;
             UITextField txtPass = null;
 
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
-                var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
-                dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x => config.OnResult(new LoginResult(txtUser.Text, txtPass.Text, false))));
-                dlg.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnResult(new LoginResult(txtUser.Text, txtPass.Text, true))));
+            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
+            this.manager.Alloc(dlg);
 
-                dlg.AddTextField(x => {
-                    txtUser = x;
-                    x.Placeholder = config.LoginPlaceholder;
-                    x.Text = config.LoginValue ?? String.Empty;
-                });
-                dlg.AddTextField(x => {
-                    txtPass = x;
-                    x.Placeholder = config.PasswordPlaceholder;
-                    x.SecureTextEntry = true;
-                });
-                this.Present(dlg);
-            }
-            else {
-                var dlg = new UIAlertView {
-                    AlertViewStyle = UIAlertViewStyle.LoginAndPasswordInput,
-                    Title = config.Title,
-					Message = config.Message
-                };
-                txtUser = dlg.GetTextField(0);
-                txtPass = dlg.GetTextField(1);
+            dlg.AddAction(UIAlertAction.Create(this.CancelText, UIAlertActionStyle.Cancel, x => this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, false))));
+            dlg.AddAction(UIAlertAction.Create(this.OkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, true))));
 
-                txtUser.Placeholder = config.LoginPlaceholder;
-                txtUser.Text = config.LoginValue ?? String.Empty;
-                txtPass.Placeholder = config.PasswordPlaceholder;
+            dlg.AddTextField(x => {
+                txtUser = x;
+                x.Placeholder = this.LoginPlaceholder;
+                x.Text = this.LoginValue ?? String.Empty;
+            });
+            dlg.AddTextField(x => {
+                txtPass = x;
+                x.Placeholder = this.PasswordPlaceholder;
+                x.SecureTextEntry = true;
+            });
+            //this.Present(dlg);
+        }
 
-                dlg.AddButton(config.OkText);
-                dlg.AddButton(config.CancelText);
-                dlg.CancelButtonIndex = 1;
 
-                dlg.Clicked += (s, e) => {
-                    var ok = ((int)dlg.CancelButtonIndex != (int)e.ButtonIndex);
-                    config.OnResult(new LoginResult(txtUser.Text, txtPass.Text, ok));
-                };
-                this.Present(dlg);
-            }
-*/
+        protected virtual void Ver7() {
+            var dlg = new UIAlertView {
+                AlertViewStyle = UIAlertViewStyle.LoginAndPasswordInput,
+                Title = this.Title,
+				Message = this.Message
+            };
+            this.manager.Alloc(dlg);
+
+            var txtUser = dlg.GetTextField(0);
+            var txtPass = dlg.GetTextField(1);
+
+            txtUser.Placeholder = this.LoginPlaceholder;
+            txtUser.Text = this.LoginValue ?? String.Empty;
+            txtPass.Placeholder = this.PasswordPlaceholder;
+
+            dlg.AddButton(this.OkText);
+            dlg.AddButton(this.CancelText);
+            dlg.CancelButtonIndex = 1;
+
+            dlg.Clicked += (s, e) => {
+                var ok = (int)dlg.CancelButtonIndex != (int)e.ButtonIndex;
+                this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, ok));
+            };
+            //this.Present(dlg);
+        }
+    }
+}

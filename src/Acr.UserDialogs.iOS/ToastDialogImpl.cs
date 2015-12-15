@@ -1,31 +1,29 @@
 ﻿using System;
+using MessageBar;
+using UIKit;
 
 
 namespace Acr.UserDialogs {
 
     public class ToastDialogImpl : ToastDialog {
+        //this.toastTimer = new Timer();
+        //this.toastTimer.Elapsed += (sender, args) => {
+        //    this.toastTimer.Stop();
+        //    UIApplication.SharedApplication.InvokeOnMainThread(MessageBarManager.SharedInstance.HideAll);
+        //};
+
 
         public override void Show() {
-            throw new NotImplementedException();
+            UIApplication.SharedApplication.InvokeOnMainThread(() => {
+                //MessageBarManager.SharedInstance.ShowAtTheBottom = ShowToastOnBottom;
+                MessageBarManager.SharedInstance.HideAll();
+                MessageBarManager.SharedInstance.StyleSheet = new AcrMessageBarStyleSheet(this);
+                MessageBarManager.SharedInstance.ShowMessage(this.Title, this.Description ?? String.Empty, MessageType.Success, null, () => this.Action?.Invoke());
+
+                //this.toastTimer.Stop();
+                //this.toastTimer.Interval = cfg.Duration.TotalMilliseconds;
+                //this.toastTimer.Start();
+            });
         }
     }
 }
-/*
-            UIApplication.SharedApplication.InvokeOnMainThread(() => {
-                MessageBarManager.SharedInstance.ShowAtTheBottom = ShowToastOnBottom;
-                MessageBarManager.SharedInstance.HideAll();
-                MessageBarManager.SharedInstance.StyleSheet = new AcrMessageBarStyleSheet(cfg);
-                MessageBarManager.SharedInstance.ShowMessage(cfg.Title, cfg.Description ?? String.Empty, MessageType.Success, null, () => cfg.Action?.Invoke());
-
-                this.toastTimer.Stop();
-                this.toastTimer.Interval = cfg.Duration.TotalMilliseconds;
-                this.toastTimer.Start();
-            });
-
-
-                this.toastTimer = new Timer();
-            this.toastTimer.Elapsed += (sender, args) => {
-                this.toastTimer.Stop();
-                UIApplication.SharedApplication.InvokeOnMainThread(MessageBarManager.SharedInstance.HideAll);
-            };
-*/

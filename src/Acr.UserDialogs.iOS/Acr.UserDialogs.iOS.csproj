@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="AcrMessageBarStyleSheet.cs" />
     <Compile Include="ActionSheetDialogImpl.cs" />
+    <Compile Include="AlertDialogManager.cs" />
     <Compile Include="ConfirmDialogImpl.cs" />
     <Compile Include="AlertDialogImpl.cs" />
     <Compile Include="Extensions.cs" />

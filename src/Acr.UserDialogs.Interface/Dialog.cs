@@ -24,6 +24,7 @@ namespace Acr.UserDialogs {
             if (!disposing)
                 return;
 
+            this.Cancel();
             GC.SuppressFinalize(this);
         }
     }
