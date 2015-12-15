@@ -8,10 +8,16 @@ namespace Acr.UserDialogs {
 
     public class AlertDialogImpl : AlertDialog {
 
-        public override async Task<bool> Request(CancellationToken? cancelToken = null) {
+        public override void Show() {
+            throw new NotImplementedException();
+        }
+
+
+        public override async Task Request(CancellationToken? cancelToken = null) {
+            var tcs = new TaskCompletionSource<bool>();
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
                 var alert = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
-                //alert.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnOk?.Invoke()));
+                alert.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => tcs.TrySetResult(true)));
                 //this.Present(alert);
             }
             else {
@@ -19,7 +25,11 @@ namespace Acr.UserDialogs {
                 //dlg.Clicked += (s, e) => config.OnOk?.Invoke();
                 //this.Present(dlg);
             }
-            return true;
+        }
+
+
+        protected override void Dispose(bool disposing) {
+
         }
     }
 }

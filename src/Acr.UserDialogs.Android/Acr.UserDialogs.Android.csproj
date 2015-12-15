@@ -59,11 +59,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionSheetDialogImpl.cs" />
     <Compile Include="ActionSheetListAdapter.cs" />
+    <Compile Include="AlertDialogImpl.cs" />
+    <Compile Include="ConfirmDialogImpl.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="LoginDialogImpl.cs" />
+    <Compile Include="PromptDialogImpl.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProgressDialog.cs" />
+    <Compile Include="ProgressDialogImpl.cs" />
+    <Compile Include="ToastDialogImpl.cs" />
     <Compile Include="UserDialogsImpl.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -113,24 +113,30 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionSheetContentDialog.xaml.cs">
+    <Compile Include="Internals\ActionSheetContentDialog.xaml.cs">
       <DependentUpon>ActionSheetContentDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ActionSheetOptionViewModel.cs" />
-    <Compile Include="ActionSheetViewModel.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="LoginContentDialog.xaml.cs">
+    <Compile Include="ActionSheetDialogImpl.cs" />
+    <Compile Include="Internals\ActionSheetOptionViewModel.cs" />
+    <Compile Include="Internals\ActionSheetViewModel.cs" />
+    <Compile Include="AlertDialogImpl.cs" />
+    <Compile Include="Internals\Command.cs" />
+    <Compile Include="ConfirmDialogImpl.cs" />
+    <Compile Include="Internals\LoginContentDialog.xaml.cs">
       <DependentUpon>LoginContentDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginViewModel.cs" />
-    <Compile Include="ProgressContentDialog.xaml.cs">
+    <Compile Include="LoginDialogImpl.cs" />
+    <Compile Include="Internals\LoginViewModel.cs" />
+    <Compile Include="Internals\ProgressContentDialog.xaml.cs">
       <DependentUpon>ProgressContentDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProgressDialog.cs" />
-    <Compile Include="PromptContentDialog.xaml.cs">
+    <Compile Include="Internals\ProgressDialog.cs" />
+    <Compile Include="Internals\PromptContentDialog.xaml.cs">
       <DependentUpon>PromptContentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PromptDialogImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToastDialogImpl.cs" />
     <Compile Include="UserDialogsImpl.cs" />
     <EmbeddedResource Include="Properties\Acr.UserDialogs.rd.xml" />
   </ItemGroup>
@@ -141,19 +147,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ActionSheetContentDialog.xaml">
+    <Page Include="Internals\ActionSheetContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginContentDialog.xaml">
+    <Page Include="Internals\LoginContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProgressContentDialog.xaml">
+    <Page Include="Internals\ProgressContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PromptContentDialog.xaml">
+    <Page Include="Internals\PromptContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

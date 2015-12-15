@@ -17,7 +17,11 @@ namespace Acr.UserDialogs {
         AlertDialog AlertBuilder();
         void Alert(string message, string title = null, string okText = null);
         Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null);
+
+
+        // CONFIRM
         Task<bool> ConfirmAsync(string message, string title = null, string okText = null, string cancelText = null, CancellationToken? cancelToken = null);
+        ConfirmDialog ConfirmBuilder();
 
 
         // LOGIN

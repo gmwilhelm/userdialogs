@@ -14,7 +14,7 @@ namespace Acr.UserDialogs {
         public virtual bool IsVisible { get; protected set; }
 
 
-        public virtual void Dispose() {
+        public void Dispose() {
             this.Cancel();
             this.Dispose(true);
         }

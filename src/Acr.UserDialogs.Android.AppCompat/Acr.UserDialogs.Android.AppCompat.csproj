@@ -63,14 +63,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Acr.UserDialogs.Android\ActionSheetDialogImpl.cs">
+      <Link>ActionSheetDialogImpl.cs</Link>
+    </Compile>
     <Compile Include="..\Acr.UserDialogs.Android\ActionSheetListAdapter.cs">
       <Link>ActionSheetListAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\Acr.UserDialogs.Android\AlertDialogImpl.cs">
+      <Link>AlertDialogImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Acr.UserDialogs.Android\ConfirmDialogImpl.cs">
+      <Link>ConfirmDialogImpl.cs</Link>
     </Compile>
     <Compile Include="..\Acr.UserDialogs.Android\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\Acr.UserDialogs.Android\ProgressDialog.cs">
-      <Link>ProgressDialog.cs</Link>
+    <Compile Include="..\Acr.UserDialogs.Android\LoginDialogImpl.cs">
+      <Link>LoginDialogImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Acr.UserDialogs.Android\ProgressDialogImpl.cs">
+      <Link>ProgressDialogImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Acr.UserDialogs.Android\PromptDialogImpl.cs">
+      <Link>PromptDialogImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Acr.UserDialogs.Android\ToastDialogImpl.cs">
+      <Link>ToastDialogImpl.cs</Link>
     </Compile>
     <Compile Include="..\Acr.UserDialogs.Android\UserDialogsImpl.cs">
       <Link>UserDialogsImpl.cs</Link>

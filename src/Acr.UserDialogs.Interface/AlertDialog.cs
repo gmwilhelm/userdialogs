@@ -9,45 +9,30 @@ namespace Acr.UserDialogs {
 
         public virtual string Title { get; set; }
         public virtual string Message { get; set; }
-        public virtual ActionOption Ok { get; set; }
-        public virtual ActionOption Cancel { get; set; }
-        public abstract Task<bool> Request(CancellationToken? cancelToken = null);
+        public virtual string OkText { get; set; }
 
-        public static string DefaultYes { get; set; } = "Yes";
-        public static string DefaultNo { get; set; } = "No";
-        public static string DefaultOkText { get; set; } = "Ok";
-        public static string DefaultCancelText { get; set; } = "Cancel";
-    }
-}
-/*
+        public abstract void Show();
+        public abstract Task Request(CancellationToken? cancelToken = null);
 
 
-
-        public AlertConfig() {
-            this.OkText = DefaultOkText;
-        }
-
-
-        public AlertConfig SetOkText(string text) {
+        public virtual AlertDialog SetOkText(string text) {
             this.OkText = text;
             return this;
         }
 
 
-        public AlertConfig SetTitle(string title) {
+        public virtual AlertDialog SetTitle(string title) {
             this.Title = title;
             return this;
         }
 
 
-        public AlertConfig SetMessage(string message) {
+        public virtual AlertDialog SetMessage(string message) {
             this.Message = message;
             return this;
         }
 
 
-        public AlertConfig SetCallback(Action onOk) {
-            this.OnOk = onOk;
-            return this;
-        }
-*/
+        public static string DefaultOkText { get; set; } = "Ok";
+    }
+}
