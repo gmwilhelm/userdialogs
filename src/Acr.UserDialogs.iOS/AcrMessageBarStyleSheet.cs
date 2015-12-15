@@ -7,10 +7,10 @@ using UIKit;
 namespace Acr.UserDialogs {
 
     public class AcrMessageBarStyleSheet : MessageBarStyleSheet {
-        readonly ToastConfig config;
+        readonly ToastDialog config;
 
 
-        public AcrMessageBarStyleSheet(ToastConfig config) {
+        public AcrMessageBarStyleSheet(ToastDialog config) {
             this.config = config;
         }
 
@@ -29,7 +29,7 @@ namespace Acr.UserDialogs {
             if (this.config.Icon != null)
                 return this.config.Icon.ToNative();
 
-            var msgType = (MessageType)Enum.Parse(typeof(MessageType), config.Event.ToString());
+            var msgType = (MessageType)Enum.Parse(typeof(MessageType), this.config.Event.ToString());
             return base.IconImageForMessageType(msgType);
         }
     }

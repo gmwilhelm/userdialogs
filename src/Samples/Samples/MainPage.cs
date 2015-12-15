@@ -51,48 +51,48 @@ namespace Samples {
                 "Settings/Themes",
                 Btn("Change Default Settings", () => {
                     // CANCEL
-                    ActionSheetConfig.DefaultCancelText = ConfirmConfig.DefaultCancelText = LoginConfig.DefaultCancelText = PromptConfig.DefaultCancelText = ProgressDialogConfig.DefaultCancelText = "NO WAY";
+                    ActionSheetDialog.DefaultCancelText = ConfirmDialog.DefaultCancelText = LoginDialog.DefaultCancelText = PromptDialog.DefaultCancelText = ProgressDialog.DefaultCancelText = "NO WAY";
 
                     // OK
-                    AlertConfig.DefaultOkText = ConfirmConfig.DefaultOkText = LoginConfig.DefaultOkText = PromptConfig.DefaultOkText = "Sure";
+                    AlertDialog.DefaultOkText = ConfirmDialog.DefaultOkText = LoginDialog.DefaultOkText = PromptDialog.DefaultOkText = "Sure";
 
                     // CUSTOM
-                    ActionSheetConfig.DefaultDestructiveText = "BOOM!";
-                    ConfirmConfig.DefaultYes = "SIGN LIFE AWAY";
-                    ConfirmConfig.DefaultNo = "NO WAY";
-                    LoginConfig.DefaultTitle = "HIGH SECURITY";
-                    LoginConfig.DefaultLoginPlaceholder = "WHO ARE YOU?";
-                    LoginConfig.DefaultPasswordPlaceholder = "SUPER SECRET PASSWORD";
-                    ProgressDialogConfig.DefaultTitle = "WAIT A MINUTE";
+                    ActionSheetDialog.DefaultDestructiveText = "BOOM!";
+                    ConfirmDialog.DefaultYes = "SIGN LIFE AWAY";
+                    ConfirmDialog.DefaultNo = "NO WAY";
+                    LoginDialog.DefaultTitle = "HIGH SECURITY";
+                    LoginDialog.DefaultLoginPlaceholder = "WHO ARE YOU?";
+                    LoginDialog.DefaultPasswordPlaceholder = "SUPER SECRET PASSWORD";
+                    ProgressDialog.DefaultTitle = "WAIT A MINUTE";
 
                     // TOAST
-                    ToastConfig.DefaultDuration = TimeSpan.FromSeconds(5);
+                    ToastDialog.DefaultDuration = TimeSpan.FromSeconds(5);
 
-                    ToastConfig.InfoBackgroundColor = System.Drawing.Color.Aqua;
-                    ToastConfig.SuccessTextColor = System.Drawing.Color.Blue;
-                    ToastConfig.SuccessBackgroundColor = System.Drawing.Color.BurlyWood;
-                    ToastConfig.WarnBackgroundColor = System.Drawing.Color.BlueViolet;
-                    ToastConfig.ErrorBackgroundColor = System.Drawing.Color.DeepPink;
+                    ToastDialog.InfoBackgroundColor = System.Drawing.Color.Aqua;
+                    ToastDialog.SuccessTextColor = System.Drawing.Color.Blue;
+                    ToastDialog.SuccessBackgroundColor = System.Drawing.Color.BurlyWood;
+                    ToastDialog.WarnBackgroundColor = System.Drawing.Color.BlueViolet;
+                    ToastDialog.ErrorBackgroundColor = System.Drawing.Color.DeepPink;
 
                     UserDialogs.Instance.Alert("Default Settings Updated - Now run samples");
                 }),
                 Btn("Reset Default Settings", () => {
                     // CANCEL
-                    ActionSheetConfig.DefaultCancelText = ConfirmConfig.DefaultCancelText = LoginConfig.DefaultCancelText = PromptConfig.DefaultCancelText = ProgressDialogConfig.DefaultCancelText = "Cancel";
+                    ActionSheetDialog.DefaultCancelText = ConfirmDialog.DefaultCancelText = LoginDialog.DefaultCancelText = PromptDialog.DefaultCancelText = ProgressDialog.DefaultCancelText = "Cancel";
 
                     // OK
-                    AlertConfig.DefaultOkText = ConfirmConfig.DefaultOkText = LoginConfig.DefaultOkText = PromptConfig.DefaultOkText = "Ok";
+                    AlertDialog.DefaultOkText = ConfirmDialog.DefaultOkText = LoginDialog.DefaultOkText = PromptDialog.DefaultOkText = "Ok";
 
                     // CUSTOM
-                    ActionSheetConfig.DefaultDestructiveText = "Remove";
-                    ConfirmConfig.DefaultYes = "Yes";
-                    ConfirmConfig.DefaultNo = "No";
-                    LoginConfig.DefaultTitle = "Login";
-                    LoginConfig.DefaultLoginPlaceholder = "User Name";
-                    LoginConfig.DefaultPasswordPlaceholder = "Password";
-                    ProgressDialogConfig.DefaultTitle = "Loading";
+                    ActionSheetDialog.DefaultDestructiveText = "Remove";
+                    ConfirmDialog.DefaultYes = "Yes";
+                    ConfirmDialog.DefaultNo = "No";
+                    LoginDialog.DefaultTitle = "Login";
+                    LoginDialog.DefaultLoginPlaceholder = "User Name";
+                    LoginDialog.DefaultPasswordPlaceholder = "Password";
+                    ProgressDialog.DefaultTitle = "Loading";
 
-                    ToastConfig.DefaultDuration = TimeSpan.FromSeconds(3);
+                    ToastDialog.DefaultDuration = TimeSpan.FromSeconds(3);
 
                     UserDialogs.Instance.Alert("Default Settings Restored");
 
@@ -134,7 +134,8 @@ namespace Samples {
 
 
         void ActionSheet() {
-			var cfg = new ActionSheetConfig()
+			var cfg = UserDialogs.Instance
+                .ActionSheetBuilder()
 				.SetTitle("Test Title");
 
             var testImage = BitmapLoader.Current.LoadFromResource("icon.png", null, null).Result;
@@ -147,10 +148,10 @@ namespace Samples {
                     testImage
                 );
             }
-			cfg.SetDestructive(action: () => this.Result("Destructive BOOM Selected"));
-			cfg.SetCancel(action: () => this.Result("Cancel Selected"));
+			cfg.SetDestructiveOption(action: () => this.Result("Destructive BOOM Selected"));
+			cfg.SetCancelOption(action: () => this.Result("Cancel Selected"));
 
-            UserDialogs.Instance.ActionSheet(cfg);
+            cfg.Show();
         }
 
 
@@ -168,17 +169,21 @@ namespace Samples {
 
 
         async void Login() {
-			var r = await UserDialogs.Instance.LoginAsync(new LoginConfig {
-				Message = "DANGER"
-			});
+
+			var r = await UserDialogs.Instance
+                .LoginBuilder()
+                .SetMessage("DANGER")
+                .Request();
             var status = r.Ok ? "Success" : "Cancelled";
             this.Result($"Login {status} - User Name: {r.LoginText} - Password: {r.Password}");
         }
 
 
 		void Prompt() {
-			UserDialogs.Instance.ActionSheet(new ActionSheetConfig()
-				.SetTitle("Choose Type")
+			UserDialogs
+                .Instance
+                .ActionSheetBuilder()
+                .SetTitle("Choose Type")
 				.Add("Default", () => this.PromptCommand(InputType.Default))
 				.Add("E-Mail", () => this.PromptCommand(InputType.Email))
                 .Add("Name", () => this.PromptCommand(InputType.Name))
@@ -188,16 +193,19 @@ namespace Samples {
                 .Add("Numeric Password (PIN)", () => this.PromptCommand(InputType.NumericPassword))
                 .Add("Phone", () => this.PromptCommand(InputType.Phone))
                 .Add("Url", () => this.PromptCommand(InputType.Url))
-			);
+                .Show();
 		}
 
 
 		async void PromptWithTextAndNoCancel() {
-			var result = await UserDialogs.Instance.PromptAsync(new PromptConfig {
-				Title = "PromptWithTextAndNoCancel",
-				Text = "Existing Text",
-				IsCancellable = false
-			});
+			var result = await UserDialogs
+                .Instance
+                .PromptBuilder()
+                .SetTitle("PromptWithTextAndNoCancel")
+                .SetText("Existing Text")
+                .SetCancellable(false)
+                .Request();
+
 			this.Result($"Result - {result.Text}");
 		}
 
@@ -215,7 +223,8 @@ namespace Samples {
             var cancelled = false;
 
             using (var dlg = UserDialogs.Instance.Progress("Test Progress")) {
-                dlg.SetCancel(() => cancelled = true);
+#warning TODO
+                //dlg.SetCancel(() => cancelled = true);
                 while (!cancelled && dlg.PercentComplete < 100) {
                     await Task.Delay(TimeSpan.FromMilliseconds(500));
                     dlg.PercentComplete += 2;
@@ -239,7 +248,8 @@ namespace Samples {
             var cancelSrc = new CancellationTokenSource();
 
 			using (var dlg = UserDialogs.Instance.Loading("Loading", maskType: maskType)) {
-                dlg.SetCancel(cancelSrc.Cancel);
+#warning TODO
+                //dlg.SetCancel(cancelSrc.Cancel);
 
                 try {
                     await Task.Delay(TimeSpan.FromSeconds(5), cancelSrc.Token);
@@ -257,10 +267,14 @@ namespace Samples {
 
 
 		void Toast(ToastEvent @event) {
-            UserDialogs.Instance.Toast(new ToastConfig(@event, @event.ToString(), "Testing toast functionality....fun!") {
-                Duration = TimeSpan.FromSeconds(3),
-                Action = () => this.Result("Toast Pressed")
-            });
+            UserDialogs
+                .Instance
+                .ToastBuilder()
+                .SetEvent(@event)
+                .SetTitle(@event.ToString())
+                .SetDescription("Testing toast functionality....fun!")
+                .SetDuration(TimeSpan.FromSeconds(3))
+                .SetAction(() => this.Result("Toast Pressed"));
         }
 
 
