@@ -28,10 +28,10 @@ namespace Acr.UserDialogs {
                 .SetTitle(title);
 
             if (cancel != null)
-                builder.CancelOption = new ActionOption(cancel, () => tcs.TrySetResult(cancel));
+                builder.SetCancelOption(cancel, () => tcs.TrySetResult(cancel));
 
             if (destructive != null)
-                builder.DestructiveOption = new ActionOption(destructive, () => tcs.TrySetResult(destructive));
+                builder.SetDestructiveOption(destructive, () => tcs.TrySetResult(destructive));
 
             foreach (var btn in buttons)
                 builder.Add(btn, () => tcs.TrySetResult(btn));
@@ -42,22 +42,37 @@ namespace Acr.UserDialogs {
 
 
         public virtual void Alert(string message, string title = null, string okText = null) {
-            throw new NotImplementedException();
+            this.AlertBuilder()
+                .SetTitle(title)
+                .SetMessage(message)
+                .SetOkText(okText)
+                .Show();
         }
 
 
         public virtual Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
+            return this.AlertBuilder()
+                .SetTitle(title)
+                .SetMessage(message)
+                .SetOkText(okText)
+                .Request(cancelToken);
         }
 
 
         public virtual Task<bool> ConfirmAsync(string message, string title = null, string okText = null, string cancelText = null, CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
+            return this.ConfirmBuilder()
+                .SetTitle(title)
+                .SetMessage(message)
+                .SetOkText(okText)
+                .Request(cancelToken);
         }
 
 
         public virtual Task<LoginResult> LoginAsync(string title = null, string message = null, CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
+            return this.LoginBuilder()
+                .SetTitle(title)
+                .SetMessage(message)
+                .Request(cancelToken);
         }
 
 
@@ -71,62 +86,69 @@ namespace Acr.UserDialogs {
         }
 
 
+        ProgressDialog showLoading;
         public virtual void ShowLoading(string title = null, MaskType? maskType = null) {
-            throw new NotImplementedException();
+            if (this.showLoading == null)
+                this.showLoading = this.Loading(title, null, null, true, maskType);
         }
 
 
         public virtual void HideLoading() {
-            throw new NotImplementedException();
+            this.showLoading?.Dispose();
+            this.showLoading = null;
         }
 
 
-        public virtual Task<PromptResult> PromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default) {
-            throw new NotImplementedException();
+        public virtual Task<PromptResult> PromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default, CancellationToken? cancelToken = null) {
+            return this.PromptBuilder()
+                .SetTitle(title)
+                .SetMessage(message)
+                .SetOkText(okText)
+                .SetCancelText(cancelText)
+                .SetPlaceholderText(placeholder)
+                .SetInputType(inputType)
+                .Request(cancelToken);
         }
 
 
         public virtual void InfoToast(string title, string description = null, int timeoutMillis = 3000) {
-            throw new NotImplementedException();
+            this.ToastBuilder()
+                .SetEvent(ToastEvent.Info)
+                .SetTitle(title)
+                .SetDescription(description)
+                .SetDuration(timeoutMillis)
+                .Show();
         }
 
 
         public virtual void SuccessToast(string title, string description = null, int timeoutMillis = 3000) {
-            throw new NotImplementedException();
+            this.ToastBuilder()
+                .SetEvent(ToastEvent.Success)
+                .SetTitle(title)
+                .SetDescription(description)
+                .SetDuration(timeoutMillis)
+                .Show();
         }
 
 
         public virtual void WarnToast(string title, string description = null, int timeoutMillis = 3000) {
-            throw new NotImplementedException();
+            this.ToastBuilder()
+                .SetEvent(ToastEvent.Warn)
+                .SetTitle(title)
+                .SetDescription(description)
+                .SetDuration(timeoutMillis)
+                .Show();
         }
 
 
         public virtual void ErrorToast(string title, string description = null, int timeoutMillis = 3000) {
-            throw new NotImplementedException();
+            this.ToastBuilder()
+                .SetEvent(ToastEvent.Error)
+                .SetTitle(title)
+                .SetDescription(description)
+                .SetDuration(timeoutMillis)
+                .Show();
         }
-
-
-
-  //      public virtual void Alert(string message, string title, string okText) {
-  //          this.Alert(new AlertConfig {
-  //              Message = message,
-  //              Title = title,
-  //              OkText = okText ?? AlertConfig.DefaultOkText
-  //          });
-  //      }
-
-
-  //      private ProgressDialog loading;
-		//public virtual void ShowLoading(string title, MaskType? maskType) {
-  //          if (this.loading == null)
-		//		this.loading = this.Loading(title, null, null, true, maskType);
-  //      }
-
-
-  //      public virtual void HideLoading() {
-  //          this.loading?.Dispose();
-  //          this.loading = null;
-  //      }
 
 
 		//public virtual ProgressDialog Loading(string title, Action onCancel, string cancelText, bool show, MaskType? maskType) {
@@ -180,100 +202,5 @@ namespace Acr.UserDialogs {
   //          return tcs.Task;
   //      }
 
-
-  //      public virtual Task AlertAsync(AlertConfig config) {
-  //          var tcs = new TaskCompletionSource<object>();
-  //          config.OnOk = () => tcs.TrySetResult(null);
-  //          this.Alert(config);
-  //          return tcs.Task;
-  //      }
-
-
-  //      public virtual Task<bool> ConfirmAsync(string message, string title, string okText, string cancelText) {
-  //          var tcs = new TaskCompletionSource<bool>();
-  //          this.Confirm(new ConfirmConfig {
-  //              Message = message,
-  //              Title = title,
-  //              CancelText = cancelText ?? ConfirmConfig.DefaultCancelText,
-  //              OkText = okText ?? ConfirmConfig.DefaultOkText,
-  //              OnConfirm = x => tcs.TrySetResult(x)
-  //          });
-  //          return tcs.Task;
-  //      }
-
-
-  //      public virtual Task<bool> ConfirmAsync(ConfirmConfig config) {
-  //          var tcs = new TaskCompletionSource<bool>();
-  //          config.OnConfirm = x => tcs.TrySetResult(x);
-  //          this.Confirm(config);
-  //          return tcs.Task;
-  //      }
-
-
-  //      public virtual Task<LoginResult> LoginAsync(string title, string message) {
-  //          return this.LoginAsync(new LoginConfig {
-  //              Title = title ?? LoginConfig.DefaultTitle,
-  //              Message = message
-  //          });
-  //      }
-
-
-  //      public virtual Task<LoginResult> LoginAsync(LoginConfig config) {
-  //          var tcs = new TaskCompletionSource<LoginResult>();
-  //          config.OnResult = x => tcs.TrySetResult(x);
-  //          this.Login(config);
-  //          return tcs.Task;
-  //      }
-
-
-  //      public virtual Task<PromptResult> PromptAsync(string message, string title, string okText, string cancelText, string placeholder, InputType inputType) {
-  //          var tcs = new TaskCompletionSource<PromptResult>();
-  //          this.Prompt(new PromptConfig {
-  //              Message = message,
-  //              Title = title,
-  //              CancelText = cancelText ?? PromptConfig.DefaultCancelText,
-  //              OkText = okText ?? PromptConfig.DefaultOkText,
-  //              Placeholder = placeholder,
-  //              InputType = inputType,
-  //              OnResult = x => tcs.TrySetResult(x)
-  //          });
-  //          return tcs.Task;
-  //      }
-
-
-  //      public virtual Task<PromptResult> PromptAsync(PromptConfig config) {
-  //          var tcs = new TaskCompletionSource<PromptResult>();
-  //          config.OnResult = x => tcs.TrySetResult(x);
-  //          this.Prompt(config);
-  //          return tcs.Task;
-  //      }
-
-
-  //      public virtual void InfoToast(string title, string description, int timeoutMillis) {
-  //          this.Toast(ToastEvent.Info, title, description, timeoutMillis);
-  //      }
-
-
-  //      public virtual void SuccessToast(string title, string description, int timeoutMillis) {
-  //          this.Toast(ToastEvent.Success, title, description, timeoutMillis);
-  //      }
-
-
-  //      public virtual void WarnToast(string title, string description, int timeoutMillis) {
-  //          this.Toast(ToastEvent.Warn, title, description, timeoutMillis);
-  //      }
-
-
-  //      public virtual void ErrorToast(string title, string description, int timeoutMillis) {
-  //          this.Toast(ToastEvent.Error, title, description, timeoutMillis);
-  //      }
-
-
-  //      public virtual void Toast(ToastEvent toastEvent, string title, string description, int timeoutMillis) {
-  //          this.Toast(new ToastConfig(toastEvent, title) {
-  //              Description = description,
-  //              Duration = TimeSpan.FromMilliseconds(timeoutMillis)
-  //          });
-  //      }
     }
 }

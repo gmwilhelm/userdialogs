@@ -38,6 +38,13 @@ namespace Acr.UserDialogs {
         }
 
 
+        public virtual ConfirmDialog SetYesNoButtons(string yesText = null, string noText = null) {
+            this.OkText = yesText ?? DefaultYes;
+            this.CancelText = noText ?? DefaultNo;
+            return this;
+        }
+
+
         public static string DefaultYes { get; set; } = "Yes";
         public static string DefaultNo { get; set; } = "No";
         public static string DefaultOkText { get; set; } = "Ok";

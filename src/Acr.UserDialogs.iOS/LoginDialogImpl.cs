@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Acr.Support.iOS;
 using UIKit;
 
 
@@ -19,6 +20,7 @@ namespace Acr.UserDialogs {
                 this.Ver7();
 
             var result = await this.manager.Tcs.Task;
+            this.manager.Free();
             return result;
         }
 
@@ -43,7 +45,7 @@ namespace Acr.UserDialogs {
                 x.Placeholder = this.PasswordPlaceholder;
                 x.SecureTextEntry = true;
             });
-            //this.Present(dlg);
+            UIApplication.SharedApplication.Present(dlg);
         }
 
 
@@ -70,7 +72,7 @@ namespace Acr.UserDialogs {
                 var ok = (int)dlg.CancelButtonIndex != (int)e.ButtonIndex;
                 this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, ok));
             };
-            //this.Present(dlg);
+            UIApplication.SharedApplication.InvokeOnMainThread(dlg.Show);
         }
     }
 }

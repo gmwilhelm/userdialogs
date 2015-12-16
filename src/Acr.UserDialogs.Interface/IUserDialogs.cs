@@ -39,7 +39,7 @@ namespace Acr.UserDialogs {
 
         // PROMPT
         PromptDialog PromptBuilder();
-        Task<PromptResult> PromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default);
+        Task<PromptResult> PromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default, CancellationToken? cancelToken = null);
 
 
         // TOASTS

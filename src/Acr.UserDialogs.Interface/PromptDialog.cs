@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -16,7 +17,7 @@ namespace Acr.UserDialogs {
         public virtual string CancelText { get; set; }
 
 
-        public abstract Task<PromptResult> Request();
+        public abstract Task<PromptResult> Request(CancellationToken? cancelToken = null);
 
 
         public virtual PromptDialog SetTitle(string title) {

@@ -1,40 +1,44 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Acr.Support.iOS;
 using UIKit;
 
 
 namespace Acr.UserDialogs {
 
     public class ConfirmDialogImpl : ConfirmDialog {
-        TaskCompletionSource<bool> tcs;
-        UIAlertController alertCtrl;
-        UIAlertView alertView;
-
+        readonly AlertDialogManager<bool> manager = new AlertDialogManager<bool>();
 
         public override async Task<bool> Request(CancellationToken? cancelToken = null) {
-            this.tcs = new TaskCompletionSource<bool>();
+            this.manager.AssertFree();
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
-                this.alertCtrl = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
-                this.alertCtrl.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => this.tcs.TrySetResult(true)));
-                this.alertCtrl.AddAction(UIAlertAction.Create(this.CancelText ?? DefaultCancelText, UIAlertActionStyle.Cancel, x => this.tcs.TrySetResult(false)));
-                //this.Present(alert);
+                var ctrl = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
+                this.manager.Alloc(ctrl);
+
+                ctrl.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(true)));
+                ctrl.AddAction(UIAlertAction.Create(this.CancelText ?? DefaultCancelText, UIAlertActionStyle.Cancel, x => this.manager.Tcs.TrySetResult(false)));
+                UIApplication.SharedApplication.Present(ctrl);
             }
             else {
-                this.alertView = new UIAlertView(this.Title ?? String.Empty, this.Message, null, this.CancelText, this.OkText);
-                this.alertView.Clicked += (s, e) => {
-                    var ok = (int)this.alertView.CancelButtonIndex != (int)e.ButtonIndex;
-                    this.tcs.TrySetResult(ok);
+                var view = new UIAlertView(this.Title ?? String.Empty, this.Message, null, this.CancelText, this.OkText);
+                this.manager.Alloc(view);
+                view.Clicked += (s, e) => {
+                    var ok = (int)view.CancelButtonIndex != (int)e.ButtonIndex;
+                    this.manager.Tcs.TrySetResult(ok);
                 };
-                //this.Present(dlg);
+                UIApplication.SharedApplication.InvokeOnMainThread(view.Show);
             }
-            return await this.tcs.Task;
+            var result = await this.manager.Tcs.Task;
+            this.manager.Free();
+            return result;
         }
 
 
-        protected override void Dispose(bool disposing) {
-            this.Cancel();
+        public override void Cancel() {
+            base.Cancel();
+            this.manager.Free();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -6,7 +7,7 @@ namespace Acr.UserDialogs {
 
     public class PromptDialogImpl : PromptDialog {
 
-        public override Task<PromptResult> Request() {
+        public override Task<PromptResult> Request(CancellationToken? cancelToken) {
             throw new NotImplementedException();
         }
     }

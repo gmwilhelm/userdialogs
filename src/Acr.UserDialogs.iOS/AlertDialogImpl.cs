@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Acr.Support.iOS;
 using UIKit;
 
 
@@ -29,14 +30,14 @@ namespace Acr.UserDialogs {
                 this.manager.Alloc(ctrl);
 
                 ctrl.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(true)));
-                //this.Present(alert);
+                UIApplication.SharedApplication.Present(ctrl);
             }
             else {
                 var view = new UIAlertView(this.Title ?? String.Empty, this.Message, null, null, this.OkText);
                 this.manager.Alloc(view);
 
                 view.Clicked += (s, e) => this.manager.Tcs.TrySetResult(true);
-                //this.Present(dlg);
+                UIApplication.SharedApplication.InvokeOnMainThread(view.Show);
             }
             await this.manager.Tcs.Task;
             this.manager.Free();

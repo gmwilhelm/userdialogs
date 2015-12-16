@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Acr.Support.iOS;
 using UIKit;
 
 
@@ -9,7 +11,7 @@ namespace Acr.UserDialogs {
         readonly AlertDialogManager<PromptResult> manager = new AlertDialogManager<PromptResult>();
 
 
-        public override async Task<PromptResult> Request() {
+        public override async Task<PromptResult> Request(CancellationToken? cancelToken) {
             this.manager.AssertFree();
 
 			if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
@@ -46,7 +48,7 @@ namespace Acr.UserDialogs {
 
                 txt = x;
             });
-            //this.Present(dlg);
+            UIApplication.SharedApplication.Present(dlg);
         }
 
 
@@ -69,7 +71,7 @@ namespace Acr.UserDialogs {
                 var ok = (int)dlg.CancelButtonIndex != (int)e.ButtonIndex;
                 this.manager.Tcs.TrySetResult(new PromptResult(ok, txt.Text.Trim()));
             };
-            //         this.Present(dlg);
+            UIApplication.SharedApplication.InvokeOnMainThread(dlg.Show);
         }
 
 

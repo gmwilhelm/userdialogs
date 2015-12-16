@@ -29,8 +29,9 @@ namespace Acr.UserDialogs {
             if (this.config.Icon != null)
                 return this.config.Icon.ToNative();
 
-            var msgType = (MessageType)Enum.Parse(typeof(MessageType), this.config.Event.ToString());
-            return base.IconImageForMessageType(msgType);
+            //var msgType = (MessageType)Enum.Parse(typeof(MessageType), this.config.Event.ToString());
+            //return base.IconImageForMessageType(msgType);
+            return base.IconImageForMessageType(MessageType.Success);
         }
     }
 }

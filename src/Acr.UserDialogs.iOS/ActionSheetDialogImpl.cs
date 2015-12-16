@@ -66,7 +66,7 @@ namespace Acr.UserDialogs {
 			if (this.CancelOption != null)
 				this.AddActionSheetOption(this.CancelOption, sheet, UIAlertActionStyle.Cancel);
 
-			//this.Present(sheet);
+            UIApplication.SharedApplication.Present(sheet);
 		}
 
 
