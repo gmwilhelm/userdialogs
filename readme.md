@@ -4,6 +4,13 @@ A cross platform library that allows you to call for standard user dialogs from 
 Supports Android, iOS, Windows Phone 8.0 (silverlight), and Unified Windows Platform (UWP, UAP)
 
 
+### VERSION 5 CONTAINS SEVERAL BREAKING CHANGES
+As such, please do not file bugs based on the list below.
+
+* Most of the synchronous calls have been removed
+* For true flexibility with any dialog, please use the *Builder methods
+
+
 ### Features
 
 

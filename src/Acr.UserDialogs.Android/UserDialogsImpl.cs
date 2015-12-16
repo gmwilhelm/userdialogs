@@ -22,32 +22,32 @@ namespace Acr.UserDialogs {
 
 
         public override AlertDialog AlertBuilder() {
-            return new AlertDialogImpl();
+            return new AlertDialogImpl(this.GetTopActivity());
         }
 
 
         public override ConfirmDialog ConfirmBuilder() {
-            return new ConfirmDialogImpl();
+            return new ConfirmDialogImpl(this.GetTopActivity());
         }
 
 
         public override LoginDialog LoginBuilder() {
-            return new LoginDialogImpl();
+            return new LoginDialogImpl(this.GetTopActivity());
         }
 
 
         public override ProgressDialog ProgressBuilder() {
-            return new ProgressDialogImpl();
+            return new ProgressDialogImpl(this.GetTopActivity());
         }
 
 
         public override PromptDialog PromptBuilder() {
-            return new PromptDialogImpl();
+            return new PromptDialogImpl(this.GetTopActivity());
         }
 
 
         public override ToastDialog ToastBuilder() {
-            return new ToastDialogImpl();
+            return new ToastDialogImpl(this.GetTopActivity());
         }
 
 

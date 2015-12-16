@@ -1,60 +1,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.App;
+using Android.Text;
+using Android.Text.Method;
+using Android.Widget;
+#if APPCOMPAT
+using AD = Android.Support.V7.App.AlertDialog;
+#else
+using AD = Android.App.AlertDialog;
+#endif
 
 
 namespace Acr.UserDialogs {
 
     public class PromptDialogImpl : PromptDialog {
+        AD dialog;
+        readonly Activity activity;
+
+
+        public PromptDialogImpl(Activity activity) {
+            this.activity = activity;
+        }
+
 
         public override Task<PromptResult> Request(CancellationToken? cancelToken) {
+            var txt = new EditText(this.activity) {
+                Hint = this.PlaceholderText
+            };
+			if (this.Text != null)
+				txt.Text = this.Text;
+
+            this.SetInputType(txt, this.InputType);
+
             throw new NotImplementedException();
         }
-    }
-}
-/*
-            Utils.RequestMainThread(() => {
-                var activity = this.GetTopActivity();
-
-                var txt = new EditText(activity) {
-                    Hint = config.Placeholder
-                };
-				if (config.Text != null)
-					txt.Text = config.Text;
-
-                this.SetInputType(txt, config.InputType);
-
-
- Unmerged change from project 'Acr.UserDialogs.Android.AppCompat'
-Before:
-                var builder = new AlertDialog
-After:
-                var builder = new Android.Support.V7.App.AlertDialog
-
-                var builder = new Android.App.AlertDialog
-                    .Builder(activity)
-                    .SetCancelable(false)
-                    .SetMessage(config.Message)
-                    .SetTitle(config.Title)
-                    .SetView(txt)
-                    .SetPositiveButton(config.OkText, (s, a) =>
-                        config.OnResult(new PromptResult {
-                            Ok = true,
-                            Text = txt.Text
-                        })
-					);
-
-				if (config.IsCancellable) {
-					builder.SetNegativeButton(config.CancelText, (s, a) =>
-                        config.OnResult(new PromptResult {
-                            Ok = false,
-                            Text = txt.Text
-                        })
-					);
-				}
-
-				builder.ShowExt();
-            });
 
 
         protected virtual void SetInputType(TextView txt, InputType inputType) {
@@ -100,4 +80,37 @@ After:
 					break;
             }
         }
+    }
+}
+/*
+            Utils.RequestMainThread(() => {
+                var activity = this.GetTopActivity();
+
+
+
+                var builder = new Android.App.AlertDialog
+                    .Builder(activity)
+                    .SetCancelable(false)
+                    .SetMessage(config.Message)
+                    .SetTitle(config.Title)
+                    .SetView(txt)
+                    .SetPositiveButton(config.OkText, (s, a) =>
+                        config.OnResult(new PromptResult {
+                            Ok = true,
+                            Text = txt.Text
+                        })
+					);
+
+				if (config.IsCancellable) {
+					builder.SetNegativeButton(config.CancelText, (s, a) =>
+                        config.OnResult(new PromptResult {
+                            Ok = false,
+                            Text = txt.Text
+                        })
+					);
+				}
+
+				builder.ShowExt();
+            });
+
 */
