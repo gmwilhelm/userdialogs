@@ -1,11 +1,14 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 
 namespace Acr.UserDialogs {
 
     public class AlertDialogImpl : AlertDialog {
+        TaskCompletionSource<bool> tcs;
+
 
         public override void Show() {
             throw new NotImplementedException();
@@ -13,12 +16,14 @@ namespace Acr.UserDialogs {
 
 
         public override Task Request(CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
+            this.tcs = new TaskCompletionSource<bool>();
+            cancelToken?.Register(this.Cancel);
+
+            var dialog = new MessageDialog(this.Message, this.Title);
+            dialog.Commands.Add(new UICommand(this.OkText, x => this.tcs.TrySetResult(true)));
+            //this.Dispatch(() => dialog.ShowAsync());
+
+            return this.tcs.Task;
         }
     }
 }
-/*
-            var dialog = new MessageDialog(config.Message, config.Title);
-            dialog.Commands.Add(new UICommand(config.OkText, x => config.OnOk?.Invoke()));
-            this.Dispatch(() => dialog.ShowAsync());
-*/

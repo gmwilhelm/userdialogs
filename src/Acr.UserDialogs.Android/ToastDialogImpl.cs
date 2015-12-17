@@ -14,25 +14,29 @@ namespace Acr.UserDialogs {
         }
 
 
-        public override void Show() {
-    //        Utils.RequestMainThread(() => {
-				//var top = this.GetTopActivity();
-    //            var txt = cfg.Title;
-    //            if (!String.IsNullOrWhiteSpace(cfg.Description))
-    //                txt += Environment.NewLine + cfg.Description;
+        public override void Cancel() {
+            base.Cancel();
+            AndHUD.Shared.Dismiss(this.activity);
+        }
 
-    //            AndHUD.Shared.ShowToast(
-    //                top,
-    //                txt,
-				//	AndroidHUD.MaskType.Black,
-    //                cfg.Duration,
-    //                false,
-				//	() => {
-				//		AndHUD.Shared.Dismiss();
-    //                    cfg.Action?.Invoke();
-				//	}
-    //            );
-    //        });
+
+        public override void Show() {
+            //Utils.RequestMainThread(() => {
+            var txt = this.Title;
+            if (!String.IsNullOrWhiteSpace(this.Description))
+                txt += Environment.NewLine + this.Description;
+
+            AndHUD.Shared.ShowToast(
+                this.activity,
+                txt,
+                AndroidHUD.MaskType.Black,
+                this.Duration,
+                false,
+                () => {
+                    AndHUD.Shared.Dismiss();
+                    this.Action?.Invoke();
+                }
+            );
         }
     }
 }

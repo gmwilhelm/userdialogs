@@ -16,6 +16,7 @@ namespace Acr.UserDialogs {
 
     public class PromptDialogImpl : PromptDialog {
         AD dialog;
+        TaskCompletionSource<PromptResult> tcs;
         readonly Activity activity;
 
 
@@ -25,6 +26,8 @@ namespace Acr.UserDialogs {
 
 
         public override Task<PromptResult> Request(CancellationToken? cancelToken) {
+            this.tcs = new TaskCompletionSource<PromptResult>();
+
             var txt = new EditText(this.activity) {
                 Hint = this.PlaceholderText
             };
@@ -32,8 +35,24 @@ namespace Acr.UserDialogs {
 				txt.Text = this.Text;
 
             this.SetInputType(txt, this.InputType);
+            var builder = new AD
+                .Builder(this.activity)
+                .SetCancelable(false)
+                .SetMessage(this.Message)
+                .SetTitle(this.Title)
+                .SetView(txt)
+                .SetPositiveButton(this.OkText, (s, a) =>
+                    this.tcs.TrySetResult(new PromptResult(true, txt.Text.Trim())
+				));
 
-            throw new NotImplementedException();
+			if (this.IsCancellable)
+				builder.SetNegativeButton(this.CancelText, (s, a) =>
+                    this.tcs.TrySetResult(new PromptResult(false, txt.Text.Trim())
+				));
+
+            //Utils.RequestMainThread(() => {
+			builder.ShowExt();
+            return this.tcs.Task;
         }
 
 
@@ -82,35 +101,3 @@ namespace Acr.UserDialogs {
         }
     }
 }
-/*
-            Utils.RequestMainThread(() => {
-                var activity = this.GetTopActivity();
-
-
-
-                var builder = new Android.App.AlertDialog
-                    .Builder(activity)
-                    .SetCancelable(false)
-                    .SetMessage(config.Message)
-                    .SetTitle(config.Title)
-                    .SetView(txt)
-                    .SetPositiveButton(config.OkText, (s, a) =>
-                        config.OnResult(new PromptResult {
-                            Ok = true,
-                            Text = txt.Text
-                        })
-					);
-
-				if (config.IsCancellable) {
-					builder.SetNegativeButton(config.CancelText, (s, a) =>
-                        config.OnResult(new PromptResult {
-                            Ok = false,
-                            Text = txt.Text
-                        })
-					);
-				}
-
-				builder.ShowExt();
-            });
-
-*/

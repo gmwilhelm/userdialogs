@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 
 namespace Acr.UserDialogs {
@@ -6,34 +7,31 @@ namespace Acr.UserDialogs {
     public class ActionSheetDialogImpl : ActionSheetDialog {
 
         public override void Show() {
-            throw new NotImplementedException();
-        }
-    }
-}
-/*
-            var dlg = new ActionSheetContentDialog();
+             var dlg = new ActionSheetContentDialog();
 
             var vm = new ActionSheetViewModel {
-                Title = config.Title,
-                Cancel = new ActionSheetOptionViewModel(config.Cancel != null,config.Cancel?.Text, () => {
+                Title = this.Title,
+                Cancel = new ActionSheetOptionViewModel(this.CancelOption != null, this.CancelOption?.Text, () => {
                     dlg.Hide();
-                    config.Cancel?.Action?.Invoke();
+                    this.CancelOption?.Action?.Invoke();
                 }),
 
-                Destructive = new ActionSheetOptionViewModel(config.Destructive != null, config.Destructive?.Text, () => {
+                Destructive = new ActionSheetOptionViewModel(this.DestructiveOption != null, this.DestructiveOption?.Text, () => {
                     dlg.Hide();
-                    config.Destructive?.Action?.Invoke();
+                    this.DestructiveOption?.Action?.Invoke();
                 }),
 
-                Options = config
+                Options = this
                     .Options
                     .Select(x => new ActionSheetOptionViewModel(true, x.Text, () => {
                         dlg.Hide();
                         x.Action?.Invoke();
-                    }, x.ItemIcon != null ? x.ItemIcon : config.ItemIcon))
+                    }, x.ItemIcon ?? this.ItemIcon))
                     .ToList()
             };
 
             dlg.DataContext = vm;
-            this.Dispatch(() => dlg.ShowAsync());
-*/
+            //this.Dispatch(() => dlg.ShowAsync());
+        }
+    }
+}

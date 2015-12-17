@@ -13,6 +13,12 @@ namespace Acr.UserDialogs {
         //};
 
 
+        public override void Cancel() {
+            base.Cancel();
+            UIApplication.SharedApplication.InvokeOnMainThread(MessageBarManager.SharedInstance.HideAll);
+        }
+
+
         public override void Show() {
             UIApplication.SharedApplication.InvokeOnMainThread(() => {
                 //MessageBarManager.SharedInstance.ShowAtTheBottom = ShowToastOnBottom;

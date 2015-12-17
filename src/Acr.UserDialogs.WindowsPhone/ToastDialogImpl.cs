@@ -1,4 +1,10 @@
 using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using Microsoft.Phone.Shell;
+using Splat;
 
 
 namespace Acr.UserDialogs {
@@ -6,15 +12,10 @@ namespace Acr.UserDialogs {
     public class ToastDialogImpl : ToastDialog {
 
         public override void Show() {
-            throw new NotImplementedException();
-        }
-    }
-}
-/*
-            // TODO: backgroundcolor and image
+                        // TODO: backgroundcolor and image
             var resources = Application.Current.Resources;
-            var textColor = new SolidColorBrush(cfg.TextColor.ToNative());
-            var bgColor = cfg.BackgroundColor.ToNative();
+            var textColor = new SolidColorBrush(this.TextColor.ToNative());
+            var bgColor = this.BackgroundColor.ToNative();
 
             var wrapper = new StackPanel {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -28,10 +29,10 @@ namespace Acr.UserDialogs {
                 FontSize = (double)resources["PhoneFontSizeMedium"],
                 Margin = new Thickness(24, 32, 24, 12),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Text = cfg.Title
+                Text = this.Title
             });
 
-            if (!String.IsNullOrWhiteSpace(cfg.Description)) {
+            if (!String.IsNullOrWhiteSpace(this.Description)) {
                 wrapper.Children.Add(new TextBlock {
                     //Foreground = (Brush)resources["PhoneForegroundBrush"],
                     //FontSize = (double)resources["PhoneFontSizeMedium"],
@@ -39,7 +40,7 @@ namespace Acr.UserDialogs {
                     FontSize = (double)resources["PhoneFontSizeSmall"],
                     Margin = new Thickness(24, 32, 24, 12),
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Text = cfg.Title
+                    Text = this.Title
                 });
             }
 
@@ -50,17 +51,19 @@ namespace Acr.UserDialogs {
             wrapper.Tap += (sender, args) => {
                 SystemTray.BackgroundColor = (Color)resources["PhoneBackgroundColor"];
                 popup.IsOpen = false;
-                cfg.Action?.Invoke();
+                this.Action?.Invoke();
             };
 
-            this.Dispatch(() => {
-                //SystemTray.BackgroundColor = (Color)resources["PhoneAccentColor"];
-                SystemTray.BackgroundColor = bgColor;
-                popup.IsOpen = true;
-            });
-            Task.Delay(cfg.Duration)
-                .ContinueWith(x => this.Dispatch(() => {
-                    SystemTray.BackgroundColor = (Color)resources["PhoneBackgroundColor"];
-                    popup.IsOpen = false;
-                }));
-*/
+            //this.Dispatch(() => {
+            //    //SystemTray.BackgroundColor = (Color)resources["PhoneAccentColor"];
+            //    SystemTray.BackgroundColor = bgColor;
+            //    popup.IsOpen = true;
+            //});
+            //Task.Delay(this.Duration)
+            //    .ContinueWith(x => this.Dispatch(() => {
+            //        SystemTray.BackgroundColor = (Color)resources["PhoneBackgroundColor"];
+            //        popup.IsOpen = false;
+            //    }));
+        }
+    }
+}

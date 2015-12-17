@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.UI.Core;
-using Windows.UI.Popups;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Coding4Fun.Toolkit.Controls;
 using Splat;
 
 

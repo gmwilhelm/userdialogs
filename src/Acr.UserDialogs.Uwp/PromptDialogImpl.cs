@@ -1,49 +1,45 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 
 namespace Acr.UserDialogs {
 
     public class PromptDialogImpl : PromptDialog {
+        TaskCompletionSource<PromptResult> tcs;
+
 
         public override Task<PromptResult> Request(CancellationToken? cancelToken) {
-            throw new NotImplementedException();
-        }
-    }
-}
-/*
-            var dialog = new ContentDialog { Title = config.Title };
+            var dialog = new ContentDialog { Title = this.Title };
             var txt = new TextBox {
-                PlaceholderText = config.Placeholder,
-                Text = config.Text ?? String.Empty
+                PlaceholderText = this.PlaceholderText,
+                Text = this.Text ?? String.Empty
             };
             var stack = new StackPanel {
                 Children = {
-                    new TextBlock { Text = config.Message },
+                    new TextBlock { Text = this.Message },
                     txt
                 }
             };
             dialog.Content = stack;
 
-            dialog.PrimaryButtonText = config.OkText;
+            dialog.PrimaryButtonText = this.OkText;
             dialog.PrimaryButtonCommand = new Command(() => {
-                config.OnResult?.Invoke(new PromptResult {
-                    Ok = true,
-                    Text = txt.Text.Trim()
-                });
+                this.tcs.TrySetResult(new PromptResult(true, txt.Text.Trim()));
                 dialog.Hide();
             });
 
-            if (config.IsCancellable) {
-                dialog.SecondaryButtonText = config.CancelText;
+            if (this.IsCancellable) {
+                dialog.SecondaryButtonText = this.CancelText;
                 dialog.SecondaryButtonCommand = new Command(() => {
-                    config.OnResult?.Invoke(new PromptResult {
-                        Ok = false,
-                        Text = txt.Text.Trim()
-                    });
+                    this.tcs.TrySetResult(new PromptResult(false, txt.Text.Trim()));
                     dialog.Hide();
                 });
             }
-            this.Dispatch(() => dialog.ShowAsync());
-*/
+            //this.Dispatch(() => dialog.ShowAsync());
+
+            return this.tcs.Task;
+        }
+    }
+}
