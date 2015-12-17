@@ -17,7 +17,7 @@ namespace Acr.UserDialogs {
 
 
         public override ActionSheetDialog ActionSheetBuilder() {
-            return new ActionSheetDialogImpl();
+            return new ActionSheetDialogImpl(this.GetTopActivity());
         }
 
 

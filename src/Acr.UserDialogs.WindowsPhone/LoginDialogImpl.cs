@@ -1,27 +1,27 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using Microsoft.Phone.Controls;
 
 
 namespace Acr.UserDialogs {
 
     public class LoginDialogImpl : LoginDialog {
+        CustomMessageBox messageBox;
+        TaskCompletionSource<LoginResult> tcs;
+
 
         public override Task<LoginResult> Request(CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
-        }
-    }
-}
-/*
-            var prompt = new CustomMessageBox {
-                Caption = config.Title,
-                Message = config.Message,
-                LeftButtonContent = config.OkText,
-                RightButtonContent = config.CancelText
+            this.messageBox = new CustomMessageBox {
+                Caption = this.Title,
+                Message = this.Message,
+                LeftButtonContent = this.OkText,
+                RightButtonContent = this.CancelText
             };
             var txtUser = new PhoneTextBox {
                 //PlaceholderText = config.LoginPlaceholder,
-                Text = config.LoginValue ?? String.Empty
+                Text = this.LoginValue ?? String.Empty
             };
             var txtPass = new PasswordBox();
             //var txtPass = new PhonePasswordBox {
@@ -31,12 +31,15 @@ namespace Acr.UserDialogs {
 
             stack.Children.Add(txtUser);
             stack.Children.Add(txtPass);
-            prompt.Content = stack;
+            this.messageBox.Content = stack;
 
-            prompt.Dismissed += (sender, args) => config.OnResult(new LoginResult(
+            this.messageBox.Dismissed += (sender, args) => this.tcs.TrySetResult(new LoginResult(
                 txtUser.Text,
                 txtPass.Password,
                 args.Result == CustomMessageBoxResult.LeftButton
             ));
-            this.Dispatch(prompt.Show);
-*/
+            //this.Dispatch(prompt.Show);
+            return this.tcs.Task;
+        }
+    }
+}

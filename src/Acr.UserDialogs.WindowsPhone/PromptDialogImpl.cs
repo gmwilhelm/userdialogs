@@ -1,48 +1,49 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
+using Microsoft.Phone.Controls;
 
 
 namespace Acr.UserDialogs {
 
     public class PromptDialogImpl : PromptDialog {
+        CustomMessageBox messageBox;
+        TaskCompletionSource<PromptResult> tcs;
+
 
         public override Task<PromptResult> Request(CancellationToken? cancelToken) {
-            throw new NotImplementedException();
-        }
-    }
-}
-/*
-            var prompt = new CustomMessageBox {
-                Caption = config.Title,
-                Message = config.Message,
-                LeftButtonContent = config.OkText
+            this.messageBox = new CustomMessageBox {
+                Caption = this.Title,
+                Message = this.Message,
+                LeftButtonContent = this.OkText
             };
-			if (config.IsCancellable)
-				prompt.RightButtonContent = config.CancelText;
+			if (this.IsCancellable)
+				this.messageBox.RightButtonContent = this.CancelText;
 
             var password = new PasswordBox();
-            var inputScope = this.GetInputScope(config.InputType);
+            var inputScope = this.GetInputScope(this.InputType);
             var txt = new PhoneTextBox {
                 //PlaceholderText = config.Placeholder,
                 InputScope = inputScope
             };
-			if (config.Text != null)
-				txt.Text = config.Text;
+			if (this.Text != null)
+				txt.Text = this.Text;
 
-            var isSecure = (config.InputType == InputType.NumericPassword || config.InputType == InputType.Password);
+            var isSecure = this.InputType == InputType.NumericPassword || this.InputType == InputType.Password;
             if (isSecure)
-                prompt.Content = password;
+                this.messageBox.Content = password;
             else
-                prompt.Content = txt;
+                this.messageBox.Content = txt;
 
-            prompt.Dismissed += (sender, args) => config.OnResult(new PromptResult {
-                Ok = args.Result == CustomMessageBoxResult.LeftButton,
-                Text = isSecure
-                    ? password.Password
-                    : txt.Text.Trim()
-            });
-            this.Dispatch(prompt.Show);
+            this.messageBox.Dismissed += (sender, args) => this.tcs.TrySetResult(new PromptResult(
+                args.Result == CustomMessageBoxResult.LeftButton,
+                isSecure ? password.Password : txt.Text.Trim()
+            ));
+            //this.Dispatch(prompt.Show);
+            return this.tcs.Task;
+        }
 
 
         protected virtual InputScope GetInputScope(InputType inputType) {
@@ -85,4 +86,5 @@ namespace Acr.UserDialogs {
             scope.Names.Add(name);
             return scope;
         }
-*/
+    }
+}

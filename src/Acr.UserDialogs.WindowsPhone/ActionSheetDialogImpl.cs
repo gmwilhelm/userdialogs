@@ -1,4 +1,8 @@
 using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using Microsoft.Phone.Controls;
 
 
 namespace Acr.UserDialogs {
@@ -6,27 +10,21 @@ namespace Acr.UserDialogs {
     public class ActionSheetDialogImpl : ActionSheetDialog {
 
         public override void Show() {
-            throw new NotImplementedException();
-        }
-    }
-}
-/*
-
             var sheet = new CustomMessageBox {
-                Caption = config.Title
+                Caption = this.Title
             };
-            if (config.Cancel != null) {
+            if (this.CancelOption != null) {
                 sheet.IsRightButtonEnabled = true;
-                sheet.RightButtonContent = this.CreateButton(config.Cancel.Text, () => {
+                sheet.RightButtonContent = this.CreateButton(this.CancelOption.Text, () => {
                     sheet.Dismiss();
-                    config.Cancel.Action?.Invoke();
+                    this.CancelOption.Action?.Invoke();
                 });
             }
-            if (config.Destructive != null) {
+            if (this.DestructiveOption != null) {
                 sheet.IsLeftButtonEnabled = true;
-                sheet.LeftButtonContent = this.CreateButton(config.Destructive.Text, () => {
+                sheet.LeftButtonContent = this.CreateButton(this.DestructiveOption.Text, () => {
                     sheet.Dismiss();
-                    config.Destructive.Action?.Invoke();
+                    this.DestructiveOption.Action?.Invoke();
                 });
             }
 
@@ -34,7 +32,8 @@ namespace Acr.UserDialogs {
                 FontSize = 36,
                 Margin = new Thickness(12.0),
                 SelectionMode = SelectionMode.Single,
-                ItemsSource = config.Options
+                ItemsSource = this
+                    .Options
                     .Select(x => new TextBlock {
                         Text = x.Text,
                         Margin = new Thickness(0.0, 12.0, 0.0, 12.0),
@@ -53,5 +52,14 @@ namespace Acr.UserDialogs {
                 var action = txt.DataContext as ActionOption;
                 action?.Action?.Invoke();
             };
-            this.Dispatch(sheet.Show);
-*/
+            Deployment.Current.Dispatcher.BeginInvoke(sheet.Show);
+        }
+
+
+        protected virtual Button CreateButton(string text, Action action) {
+            var btn = new Button { Content = text };
+            btn.Click += (sender, args) => action();
+            return btn;
+        }
+    }
+}

@@ -9,13 +9,6 @@ namespace Acr.UserDialogs {
 
 
 
-        //protected virtual Button CreateButton(string text, Action action) {
-        //    var btn = new Button { Content = text };
-        //    btn.Click += (sender, args) => action();
-        //    return btn;
-        //}
-
-
         //protected virtual void Dispatch(Action action) {
         //    Deployment.Current.Dispatcher.BeginInvoke(action);
         //}
@@ -58,9 +51,11 @@ namespace Acr.UserDialogs {
             throw new NotImplementedException();
         }
 
+
         public override void ShowSuccess(string message, int timeoutMillis) {
             throw new NotImplementedException();
         }
+
 
         public override void ShowError(string message, int timeoutMillis) {
             throw new NotImplementedException();

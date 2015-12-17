@@ -71,6 +71,12 @@ namespace Acr.UserDialogs {
         }
 
 
+        public override void Cancel() {
+            base.Cancel();
+            this.dialog?.Dispose();
+        }
+
+
         // TODO: this needs to be reused
         protected virtual void SetInputType(TextView txt, InputType inputType) {
             switch (inputType) {
