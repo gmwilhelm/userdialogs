@@ -9,9 +9,14 @@ using UIKit;
 namespace Acr.UserDialogs {
 
     public class ActionSheetDialogImpl : ActionSheetDialog {
+        UIActionSheet oldSheet;
+        UIAlertController newSheet;
 
 
         public override void Show() {
+            if (this.oldSheet != null || this.newSheet != null)
+                throw new ArgumentException("ActionSheet is already visible");
+
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
                 this.Ver8();
             else
@@ -19,9 +24,20 @@ namespace Acr.UserDialogs {
         }
 
 
-		protected virtual void Ver7() {
+        public override void Cancel() {
+            base.Cancel();
+            this.oldSheet?.Dispose();
+            this.oldSheet = null;
+
+            this.newSheet?.Dispose();
+            this.newSheet = null;
+        }
+
+
+        protected virtual void Ver7() {
 			var view = UIApplication.SharedApplication.GetTopView();
 			var action = new UIActionSheet(this.Title);
+
 			this.Options
                 .ToList()
                 .ForEach(x => action.AddButton(x.Text));
@@ -49,6 +65,8 @@ namespace Acr.UserDialogs {
 				else if (btn.ButtonIndex > -1)
 					this.Options[(int)btn.ButtonIndex].Action?.Invoke();
 			};
+
+            this.oldSheet = action;
 			UIApplication.SharedApplication.InvokeOnMainThread(() => action.ShowInView(view));
 		}
 
@@ -66,6 +84,7 @@ namespace Acr.UserDialogs {
 			if (this.CancelOption != null)
 				this.AddActionSheetOption(this.CancelOption, sheet, UIAlertActionStyle.Cancel);
 
+            this.newSheet = sheet;
             UIApplication.SharedApplication.Present(sheet);
 		}
 

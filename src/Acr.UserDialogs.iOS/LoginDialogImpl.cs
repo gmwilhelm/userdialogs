@@ -12,6 +12,7 @@ namespace Acr.UserDialogs {
 
 
         public override async Task<LoginResult> Request(CancellationToken? cancelToken = null) {
+            cancelToken?.Register(this.Cancel);
             this.manager.AssertFree();
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
@@ -25,15 +26,29 @@ namespace Acr.UserDialogs {
         }
 
 
+        public override void Cancel() {
+            base.Cancel();
+            this.manager.Free();
+        }
+
+
         protected virtual void Ver8() {
             UITextField txtUser = null;
             UITextField txtPass = null;
 
-            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
+            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message ?? String.Empty, UIAlertControllerStyle.Alert);
             this.manager.Alloc(dlg);
 
-            dlg.AddAction(UIAlertAction.Create(this.CancelText, UIAlertActionStyle.Cancel, x => this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, false))));
-            dlg.AddAction(UIAlertAction.Create(this.OkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, true))));
+            dlg.AddAction(UIAlertAction.Create(
+                this.CancelText,
+                UIAlertActionStyle.Cancel,
+                x => this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, false))
+            ));
+            dlg.AddAction(UIAlertAction.Create(
+                this.OkText,
+                UIAlertActionStyle.Default,
+                x => this.manager.Tcs.TrySetResult(new LoginResult(txtUser.Text, txtPass.Text, true))
+            ));
 
             dlg.AddTextField(x => {
                 txtUser = x;

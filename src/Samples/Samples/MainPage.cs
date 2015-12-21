@@ -138,14 +138,14 @@ namespace Samples {
                 .ActionSheetBuilder()
 				.SetTitle("Test Title");
 
-            var testImage = BitmapLoader.Current.LoadFromResource("icon.png", null, null).Result;
+            //var testImage = BitmapLoader.Current.LoadFromResource("icon.png", null, null).Result;
 
             for (var i = 0; i < 5; i++) {
                 var display = (i + 1);
                 cfg.Add(
 					"Option " + display,
-					() => this.Result($"Option {display} Selected"),
-                    testImage
+					() => this.Result($"Option {display} Selected")
+                    //testImage
                 );
             }
 			cfg.SetDestructiveOption(action: () => this.Result("Destructive BOOM Selected"));

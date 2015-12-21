@@ -12,6 +12,7 @@ namespace Acr.UserDialogs {
 
 
         public override async Task<PromptResult> Request(CancellationToken? cancelToken) {
+            cancelToken?.Register(this.Cancel);
             this.manager.AssertFree();
 
 			if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
@@ -31,15 +32,19 @@ namespace Acr.UserDialogs {
 
 
         protected virtual void Ver8() {
-            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
+            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message ?? String.Empty, UIAlertControllerStyle.Alert);
             UITextField txt = null;
 
-            if (this.IsCancellable) {
+            if (this.IsCancellable)
                 dlg.AddAction(UIAlertAction.Create(this.CancelText, UIAlertActionStyle.Cancel, x =>
-                    this.manager.Tcs.TrySetResult(new PromptResult(false, txt.Text.Trim()))
+                    this.manager.Tcs.TrySetResult(new PromptResult(false, txt.Text))
                 ));
-            }
-            dlg.AddAction(UIAlertAction.Create(this.OkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(new PromptResult(true, txt.Text.Trim()))));
+
+            dlg.AddAction(UIAlertAction.Create(
+                this.OkText,
+                UIAlertActionStyle.Default,
+                x => this.manager.Tcs.TrySetResult(new PromptResult(true, txt.Text))
+            ));
             dlg.AddTextField(x => {
                 this.SetInputType(x, this.InputType);
                 x.Placeholder = this.PlaceholderText ?? String.Empty;
@@ -69,7 +74,7 @@ namespace Acr.UserDialogs {
 
             dlg.Clicked += (s, e) => {
                 var ok = (int)dlg.CancelButtonIndex != (int)e.ButtonIndex;
-                this.manager.Tcs.TrySetResult(new PromptResult(ok, txt.Text.Trim()));
+                this.manager.Tcs.TrySetResult(new PromptResult(ok, txt.Text));
             };
             UIApplication.SharedApplication.InvokeOnMainThread(dlg.Show);
         }

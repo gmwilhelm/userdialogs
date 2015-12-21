@@ -6,7 +6,7 @@ using Splat;
 namespace Acr.UserDialogs {
 
     public abstract class ToastDialog : Dialog {
-        //public static bool ShowToastOnBottom { get; set; }
+        public virtual ToastPosition Position { get; set; } = ToastPosition.Top; // only works on iOS at the moment
 
         public abstract void Show();
         public virtual string Title { get; set; }

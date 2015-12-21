@@ -8,7 +8,7 @@ namespace Acr.UserDialogs {
         public virtual string Title { get; set; }
 		public virtual int PercentComplete { get; set; }
 		public virtual bool IsDeterministic { get; set; }
-        public virtual MaskType MaskType { get; set; }
+        public virtual MaskType MaskType { get; set; } = MaskType.Black;
         public virtual ActionOption CancelOption { get; set; }
 
 

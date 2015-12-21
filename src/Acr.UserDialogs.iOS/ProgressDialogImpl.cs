@@ -7,13 +7,6 @@ namespace Acr.UserDialogs {
 
     public class ProgressDialogImpl : ProgressDialog {
 
-        //public ProgressDialogImpl() {
-        //    this.MaskType = MaskType.Black;
-        //}
-
-
-        //#region IProgressDialog Members
-
         //string title;
         //public virtual string Title {
         //    get { return this.title; }

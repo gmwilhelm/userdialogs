@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using MessageBar;
 using UIKit;
 
@@ -6,11 +7,15 @@ using UIKit;
 namespace Acr.UserDialogs {
 
     public class ToastDialogImpl : ToastDialog {
-        //this.toastTimer = new Timer();
-        //this.toastTimer.Elapsed += (sender, args) => {
-        //    this.toastTimer.Stop();
-        //    UIApplication.SharedApplication.InvokeOnMainThread(MessageBarManager.SharedInstance.HideAll);
-        //};
+        static readonly Timer timer = new Timer();
+
+
+        static ToastDialogImpl() {
+            timer.Elapsed += (sender, args) => {
+                timer.Stop();
+                UIApplication.SharedApplication.InvokeOnMainThread(MessageBarManager.SharedInstance.HideAll);
+            };
+        }
 
 
         public override void Cancel() {
@@ -21,14 +26,20 @@ namespace Acr.UserDialogs {
 
         public override void Show() {
             UIApplication.SharedApplication.InvokeOnMainThread(() => {
-                //MessageBarManager.SharedInstance.ShowAtTheBottom = ShowToastOnBottom;
+                MessageBarManager.SharedInstance.ShowAtTheBottom = this.Position == ToastPosition.Bottom;
                 MessageBarManager.SharedInstance.HideAll();
                 MessageBarManager.SharedInstance.StyleSheet = new AcrMessageBarStyleSheet(this);
-                MessageBarManager.SharedInstance.ShowMessage(this.Title, this.Description ?? String.Empty, MessageType.Success, null, () => this.Action?.Invoke());
+                MessageBarManager.SharedInstance.ShowMessage(
+                    this.Title,
+                    this.Description ?? String.Empty,
+                    MessageType.Success,
+                    null,
+                    () => this.Action?.Invoke()
+                );
 
-                //this.toastTimer.Stop();
-                //this.toastTimer.Interval = cfg.Duration.TotalMilliseconds;
-                //this.toastTimer.Start();
+                timer.Stop();
+                timer.Interval = this.Duration.TotalMilliseconds;
+                timer.Start();
             });
         }
     }

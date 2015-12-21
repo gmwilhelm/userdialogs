@@ -23,6 +23,7 @@ namespace Acr.UserDialogs {
 
 
         public override async Task Request(CancellationToken? cancelToken = null) {
+            cancelToken?.Register(this.Cancel);
             this.manager.AssertFree();
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {

@@ -17,8 +17,16 @@ namespace Acr.UserDialogs {
                 var ctrl = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
                 this.manager.Alloc(ctrl);
 
-                ctrl.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(true)));
-                ctrl.AddAction(UIAlertAction.Create(this.CancelText ?? DefaultCancelText, UIAlertActionStyle.Cancel, x => this.manager.Tcs.TrySetResult(false)));
+                ctrl.AddAction(UIAlertAction.Create(
+                    this.OkText ?? DefaultOkText,
+                    UIAlertActionStyle.Default,
+                    x => this.manager.Tcs.TrySetResult(true)
+                ));
+                ctrl.AddAction(UIAlertAction.Create(
+                    this.CancelText ?? DefaultCancelText,
+                    UIAlertActionStyle.Cancel,
+                    x => this.manager.Tcs.TrySetResult(false)
+                ));
                 UIApplication.SharedApplication.Present(ctrl);
             }
             else {
