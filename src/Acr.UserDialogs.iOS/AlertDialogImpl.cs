@@ -28,14 +28,14 @@ namespace Acr.UserDialogs {
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
                 var ctrl = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
-                this.manager.Alloc(ctrl);
+                this.manager.Set(ctrl);
 
                 ctrl.AddAction(UIAlertAction.Create(this.OkText ?? DefaultOkText, UIAlertActionStyle.Default, x => this.manager.Tcs.TrySetResult(true)));
                 UIApplication.SharedApplication.Present(ctrl);
             }
             else {
                 var view = new UIAlertView(this.Title ?? String.Empty, this.Message, null, null, this.OkText);
-                this.manager.Alloc(view);
+                this.manager.Set(view);
 
                 view.Clicked += (s, e) => this.manager.Tcs.TrySetResult(true);
                 UIApplication.SharedApplication.InvokeOnMainThread(view.Show);

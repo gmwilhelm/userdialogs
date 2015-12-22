@@ -41,7 +41,7 @@ namespace Acr.UserDialogs {
                 this.Message ?? String.Empty,
                 UIAlertControllerStyle.Alert
             );
-            this.manager.Alloc(dlg);
+            this.manager.Set(dlg);
 
             dlg.AddAction(UIAlertAction.Create(
                 this.CancelText,
@@ -74,7 +74,7 @@ namespace Acr.UserDialogs {
                 Title = this.Title,
 				Message = this.Message
             };
-            this.manager.Alloc(dlg);
+            this.manager.Set(dlg);
 
             var txtUser = dlg.GetTextField(0);
             var txtPass = dlg.GetTextField(1);

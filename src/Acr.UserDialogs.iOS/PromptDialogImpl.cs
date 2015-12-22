@@ -39,6 +39,7 @@ namespace Acr.UserDialogs {
                 this.Message,
                 UIAlertControllerStyle.Alert
             );
+			this.manager.Set(dlg);
 
             if (this.IsCancellable)
                 dlg.AddAction(UIAlertAction.Create(this.CancelText, UIAlertActionStyle.Cancel, x =>
@@ -71,6 +72,8 @@ namespace Acr.UserDialogs {
                     ? UIAlertViewStyle.SecureTextInput
                     : UIAlertViewStyle.PlainTextInput
             };
+			this.manager.Set(dlg);
+
             var txt = dlg.GetTextField(0);
             this.SetInputType(txt, this.InputType);
             txt.Placeholder = this.PlaceholderText;

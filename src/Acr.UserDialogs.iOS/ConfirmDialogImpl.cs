@@ -15,7 +15,7 @@ namespace Acr.UserDialogs {
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
                 var ctrl = UIAlertController.Create(this.Title ?? String.Empty, this.Message, UIAlertControllerStyle.Alert);
-                this.manager.Alloc(ctrl);
+                this.manager.Set(ctrl);
 
                 ctrl.AddAction(UIAlertAction.Create(
                     this.OkText ?? DefaultOkText,
@@ -31,7 +31,7 @@ namespace Acr.UserDialogs {
             }
             else {
                 var view = new UIAlertView(this.Title ?? String.Empty, this.Message, null, this.CancelText, this.OkText);
-                this.manager.Alloc(view);
+                this.manager.Set(view);
                 view.Clicked += (s, e) => {
                     var ok = (int)view.CancelButtonIndex != (int)e.ButtonIndex;
                     this.manager.Tcs.TrySetResult(ok);

@@ -36,7 +36,7 @@ namespace Acr.UserDialogs {
         }
 
 
-        public void Alloc(UIAlertView view) {
+        public void Set(UIAlertView view) {
             this.AssertFree();
 
             this.View = view;
@@ -45,7 +45,7 @@ namespace Acr.UserDialogs {
         }
 
 
-        public void Alloc(UIAlertController ctrl) {
+        public void Set(UIAlertController ctrl) {
             this.AssertFree();
 
             this.Controller = ctrl;
