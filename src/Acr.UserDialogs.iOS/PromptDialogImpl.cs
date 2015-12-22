@@ -32,8 +32,13 @@ namespace Acr.UserDialogs {
 
 
         protected virtual void Ver8() {
-            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message ?? String.Empty, UIAlertControllerStyle.Alert);
             UITextField txt = null;
+
+            var dlg = UIAlertController.Create(
+                this.Title,
+                this.Message,
+                UIAlertControllerStyle.Alert
+            );
 
             if (this.IsCancellable)
                 dlg.AddAction(UIAlertAction.Create(this.CancelText, UIAlertActionStyle.Cancel, x =>
@@ -61,7 +66,7 @@ namespace Acr.UserDialogs {
             var isPassword = this.InputType == InputType.Password || this.InputType == InputType.NumericPassword;
             var cancelText = this.IsCancellable ? this.CancelText : null;
 
-            var dlg = new UIAlertView(this.Title ?? String.Empty, this.Message, null, cancelText, this.OkText) {
+            var dlg = new UIAlertView(this.Title ?? String.Empty, this.Message ?? String.Empty, null, cancelText, this.OkText) {
                 AlertViewStyle = isPassword
                     ? UIAlertViewStyle.SecureTextInput
                     : UIAlertViewStyle.PlainTextInput

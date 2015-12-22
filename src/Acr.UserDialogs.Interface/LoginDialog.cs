@@ -7,13 +7,13 @@ namespace Acr.UserDialogs {
 
     public abstract class LoginDialog : Dialog {
 
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } = DefaultTitle;
         public virtual string Message { get; set; }
         public virtual string LoginValue { get; set; }
-        public virtual string LoginPlaceholder { get; set; }
-        public virtual string PasswordPlaceholder { get; set; }
-        public virtual string OkText { get; set; }
-        public virtual string CancelText { get; set; }
+        public virtual string LoginPlaceholder { get; set; } = DefaultLoginPlaceholder;
+        public virtual string PasswordPlaceholder { get; set; } = DefaultPasswordPlaceholder;
+        public virtual string OkText { get; set; } = DefaultOkText;
+        public virtual string CancelText { get; set; } = DefaultCancelText;
 
         public abstract Task<LoginResult> Request(CancellationToken? cancelToken = null);
 

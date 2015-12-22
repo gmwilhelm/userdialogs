@@ -9,7 +9,7 @@ namespace Acr.UserDialogs {
 
         public virtual string Title { get; set; }
         public virtual string Message { get; set; }
-        public virtual string OkText { get; set; }
+        public virtual string OkText { get; set; } = DefaultOkText;
 
         public abstract void Show();
         public abstract Task Request(CancellationToken? cancelToken = null);

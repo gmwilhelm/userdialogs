@@ -13,8 +13,8 @@ namespace Acr.UserDialogs {
         public bool IsCancellable { get; set; } = true;
 		public string Text { get; set; } // TODO: could make this INPC with text
         public virtual InputType InputType { get; set; }
-        public virtual string OkText { get; set; }
-        public virtual string CancelText { get; set; }
+        public virtual string OkText { get; set; } = DefaultOkText;
+        public virtual string CancelText { get; set; } = DefaultCancelText;
 
 
         public abstract Task<PromptResult> Request(CancellationToken? cancelToken = null);

@@ -36,7 +36,11 @@ namespace Acr.UserDialogs {
             UITextField txtUser = null;
             UITextField txtPass = null;
 
-            var dlg = UIAlertController.Create(this.Title ?? String.Empty, this.Message ?? String.Empty, UIAlertControllerStyle.Alert);
+            var dlg = UIAlertController.Create(
+                this.Title ?? String.Empty,
+                this.Message ?? String.Empty,
+                UIAlertControllerStyle.Alert
+            );
             this.manager.Alloc(dlg);
 
             dlg.AddAction(UIAlertAction.Create(

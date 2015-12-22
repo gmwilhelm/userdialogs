@@ -162,17 +162,28 @@ namespace Samples {
 
 
         async void Confirm() {
-            var r = await UserDialogs.Instance.ConfirmAsync("Pick a choice", "Pick Title");
-            var text = (r ? "Yes" : "No");
+            var r = await UserDialogs
+                .Instance
+                .ConfirmBuilder()
+                .SetYesNoButtons()
+                .SetTitle("Hi")
+                .SetMessage("Choose your destiny")
+                .Request();
+
+            var text = r ? "Yes" : "No";
             this.Result($"Confirmation Choice: {text}");
         }
 
 
         async void Login() {
-
 			var r = await UserDialogs.Instance
                 .LoginBuilder()
+                .SetTitle("Login!")
                 .SetMessage("DANGER")
+                .SetLoginPlaceholder("Username")
+                .SetPasswordPlaceholder("Guess if you can")
+                .SetOkText("Go")
+                .SetCancelText("Poof")
                 .Request();
             var status = r.Ok ? "Success" : "Cancelled";
             this.Result($"Login {status} - User Name: {r.LoginText} - Password: {r.Password}");
@@ -212,7 +223,14 @@ namespace Samples {
 
 		async void PromptCommand(InputType inputType) {
 			var msg = $"Enter a {inputType.ToString().ToUpper()} value";
-			var r = await UserDialogs.Instance.PromptAsync(msg, inputType: inputType);
+			//var r = await UserDialogs.Instance.PromptAsync(msg, inputType: inputType);
+            var r = await UserDialogs
+                .Instance
+                .PromptBuilder()
+                .SetTitle("Prompt!")
+                .SetInputType(inputType)
+                .SetMessage(msg)
+                .Request();
             this.Result(r.Ok
                 ? "OK " + r.Text
                 : "Prompt Cancelled");
@@ -274,7 +292,8 @@ namespace Samples {
                 .SetTitle(@event.ToString())
                 .SetDescription("Testing toast functionality....fun!")
                 .SetDuration(TimeSpan.FromSeconds(3))
-                .SetAction(() => this.Result("Toast Pressed"));
+                .SetAction(() => this.Result("Toast Pressed"))
+                .Show();
         }
 
 
