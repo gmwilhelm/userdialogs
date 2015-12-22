@@ -5,16 +5,38 @@ using Acr.UserDialogs;
 using Xamarin.Forms;
 using Splat;
 
+
 namespace Samples {
 
     public class MainPage : TabbedPage {
+		bool autoDismiss = false;
+		Dialog dialog;
+
+
 
         public MainPage() {
+			var btnAutoDismiss = new Button { Text = "Enable Auto-Dismiss" };
+			btnAutoDismiss.Clicked += (sender, e) => {
+				autoDismiss = !autoDismiss;
+				btnAutoDismiss.Text = autoDismiss
+					? "Disable Auto-Dismiss"
+					: "Enable Auto-Dismiss";
+			};
+			Task.Run(async () => {
+				while (true) {
+					await Task.Delay(TimeSpan.FromSeconds(3));
+					if (autoDismiss)
+						this.dialog?.Cancel();
+				}
+			});
+
+
             Device.OnPlatform(() => {
                 this.Padding = new Thickness(0, 30, 0, 0);
             });
             this.AddPage(
                 "Standard Dialogs",
+				btnAutoDismiss,
                 Btn("Alert", this.Alert),
                 Btn("ActionSheet", this.ActionSheet),
                 Btn("ActionSheet (async)", this.ActionSheetAsync),
@@ -128,13 +150,20 @@ namespace Samples {
 
 
         async void Alert() {
-            await UserDialogs.Instance.AlertAsync("Test alert", "Alert Title");
-            //this.lblResult.Text = "Returned from alert!";
+			var alert = UserDialogs
+				.Instance
+				.AlertBuilder()
+				.SetTitle("Hi")
+				.SetMessage("Test alert");
+
+			this.dialog = alert;
+			await alert.Request();
         }
 
 
         void ActionSheet() {
-			var cfg = UserDialogs.Instance
+			var cfg = UserDialogs
+				.Instance
                 .ActionSheetBuilder()
 				.SetTitle("Test Title");
 
@@ -162,29 +191,33 @@ namespace Samples {
 
 
         async void Confirm() {
-            var r = await UserDialogs
+            var confirm = UserDialogs
                 .Instance
                 .ConfirmBuilder()
                 .SetYesNoButtons()
                 .SetTitle("Hi")
-                .SetMessage("Choose your destiny")
-                .Request();
+				.SetMessage("Choose your destiny");
+			this.dialog = confirm;
 
+			var r = await confirm.Request();
             var text = r ? "Yes" : "No";
             this.Result($"Confirmation Choice: {text}");
         }
 
 
         async void Login() {
-			var r = await UserDialogs.Instance
+			var login = UserDialogs
+				.Instance
                 .LoginBuilder()
                 .SetTitle("Login!")
                 .SetMessage("DANGER")
                 .SetLoginPlaceholder("Username")
                 .SetPasswordPlaceholder("Guess if you can")
                 .SetOkText("Go")
-                .SetCancelText("Poof")
-                .Request();
+				.SetCancelText("Poof");
+			this.dialog = login;
+
+			var r = await login.Request();
             var status = r.Ok ? "Success" : "Cancelled";
             this.Result($"Login {status} - User Name: {r.LoginText} - Password: {r.Password}");
         }
@@ -209,14 +242,14 @@ namespace Samples {
 
 
 		async void PromptWithTextAndNoCancel() {
-			var result = await UserDialogs
+			var prompt = UserDialogs
                 .Instance
                 .PromptBuilder()
                 .SetTitle("PromptWithTextAndNoCancel")
                 .SetText("Existing Text")
-                .SetCancellable(false)
-                .Request();
+				.SetCancellable(false);
 
+			var result = await prompt.Request();
 			this.Result($"Result - {result.Text}");
 		}
 
@@ -224,16 +257,18 @@ namespace Samples {
 		async void PromptCommand(InputType inputType) {
 			var msg = $"Enter a {inputType.ToString().ToUpper()} value";
 			//var r = await UserDialogs.Instance.PromptAsync(msg, inputType: inputType);
-            var r = await UserDialogs
+			var prompt = UserDialogs
                 .Instance
                 .PromptBuilder()
                 .SetTitle("Prompt!")
                 .SetInputType(inputType)
-                .SetMessage(msg)
-                .Request();
+				.SetMessage(msg);
+			
+			this.dialog = prompt;
+			var r = await prompt.Request();
             this.Result(r.Ok
                 ? "OK " + r.Text
-                : "Prompt Cancelled");
+                : "Prompt Cancelled");			
         }
 
 
