@@ -5,7 +5,6 @@ using Android.Support.Design.Widget;
 using Android.Text;
 using Android.Views;
 using Android.Widget;
-using AndroidHUD;
 using Splat;
 
 
@@ -21,7 +20,6 @@ namespace Acr.UserDialogs {
 
 
         public override void Show() {
-            //var view = top.Window.DecorView.RootView;
             var view = this.activity.Window.DecorView.RootView.FindViewById(Android.Resource.Id.Content);
 
             var text = $"<b>{this.Title}</b>";
@@ -38,7 +36,7 @@ namespace Acr.UserDialogs {
                 snackBar.Dismiss();
                 this.Action?.Invoke();
             };
-            //Utils.RequestMainThread(snackBar.Show);
+            Acr.Support.Android.Extensions.RequestMainThread(snackBar.Show);
         }
 
 

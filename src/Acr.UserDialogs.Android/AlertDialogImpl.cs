@@ -13,6 +13,8 @@ namespace Acr.UserDialogs {
 
     public class AlertDialogImpl : AlertDialog {
         readonly Activity activity;
+        TaskCompletionSource<bool> tcs;
+        AD dialog;
 
 
         public AlertDialogImpl(Activity topActivity) {
@@ -21,12 +23,31 @@ namespace Acr.UserDialogs {
 
 
         public override void Show() {
-            throw new NotImplementedException();
+            this.Request();
         }
 
 
         public override Task Request(CancellationToken? cancelToken = null) {
-            throw new NotImplementedException();
+            cancelToken?.Register(this.Cancel);
+
+            this.tcs = new TaskCompletionSource<bool>();
+            Acr.Support.Android.Extensions.RequestMainThread(() =>
+                this.dialog = new AD
+                    .Builder(this.activity)
+                    .SetCancelable(false)
+                    .SetMessage(this.Message)
+                    .SetTitle(this.Title)
+                    .SetPositiveButton(this.OkText, (s, a) => this.tcs.TrySetResult(true))
+                    .ShowExt()
+            );
+            return this.tcs.Task;
+        }
+
+
+        public override void Cancel() {
+            base.Cancel();
+            this.tcs?.TrySetCanceled();
+            this.dialog?.Dispose();
         }
     }
 }

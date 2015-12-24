@@ -23,25 +23,27 @@ namespace Acr.UserDialogs {
 
 
         public override Task<bool> Request(CancellationToken? cancelToken = null) {
-            this.tcs = new TaskCompletionSource<bool>();
+            cancelToken?.Register(this.Cancel);
 
-            this.dialog = new AD
-                .Builder(this.activity)
-                .SetCancelable(false)
-                .SetMessage(this.Message)
-                .SetTitle(this.Title)
-                .SetPositiveButton(this.OkText, (s, a) => this.tcs.TrySetResult(true))
-                .SetNegativeButton(this.CancelText, (s, a) => this.tcs.TrySetResult(false))
-                .ShowExt();
-            //Utils.RequestMainThread(() => { });
-            // dispose of dialog
+            this.tcs = new TaskCompletionSource<bool>();
+            Acr.Support.Android.Extensions.RequestMainThread(() =>
+                this.dialog = new AD
+                    .Builder(this.activity)
+                    .SetCancelable(false)
+                    .SetMessage(this.Message)
+                    .SetTitle(this.Title)
+                    .SetPositiveButton(this.OkText, (s, a) => this.tcs.TrySetResult(true))
+                    .SetNegativeButton(this.CancelText, (s, a) => this.tcs.TrySetResult(false))
+                    .ShowExt()
+            );
             return this.tcs.Task;
         }
 
 
         public override void Cancel() {
             base.Cancel();
-            this.dialog.Dispose();
+            this.tcs?.TrySetCanceled();
+            this.dialog?.Dispose();
         }
     }
 }
