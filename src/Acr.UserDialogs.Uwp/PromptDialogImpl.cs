@@ -1,16 +1,28 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 
 
 namespace Acr.UserDialogs {
 
     public class PromptDialogImpl : PromptDialog {
+        IAsyncOperation<ContentDialogResult> dialogCancel;
         TaskCompletionSource<PromptResult> tcs;
 
 
+        public override void Cancel() {
+            base.Cancel();
+            this.dialogCancel?.Cancel();
+            this.tcs?.TrySetCanceled();
+        }
+
+
         public override Task<PromptResult> Request(CancellationToken? cancelToken) {
+            this.tcs = new TaskCompletionSource<PromptResult>();
+            cancelToken?.Register(this.Cancel);
+
             var dialog = new ContentDialog { Title = this.Title };
             var txt = new TextBox {
                 PlaceholderText = this.PlaceholderText,
@@ -37,7 +49,7 @@ namespace Acr.UserDialogs {
                     dialog.Hide();
                 });
             }
-            //this.Dispatch(() => dialog.ShowAsync());
+            this.Dispatch(() => this.dialogCancel = dialog.ShowAsync());
 
             return this.tcs.Task;
         }

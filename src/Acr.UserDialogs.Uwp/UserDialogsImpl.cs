@@ -71,13 +71,5 @@ namespace Acr.UserDialogs {
             //        catch { }
             //    });
         }
-
-
-        //protected virtual void Dispatch(Action action) {
-        //    CoreWindow
-        //        .GetForCurrentThread()
-        //        .Dispatcher
-        //        .RunAsync(CoreDispatcherPriority.Normal, () => action());
-        //}
     }
 }

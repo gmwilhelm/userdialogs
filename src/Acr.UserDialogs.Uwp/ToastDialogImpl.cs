@@ -7,9 +7,20 @@ using Splat;
 namespace Acr.UserDialogs {
 
     public class ToastDialogImpl : ToastDialog {
+        ToastPrompt toast;
+
+
+        public override void Cancel() {
+            base.Cancel();
+            this.toast?.Hide();
+            this.toast?.Dispose();
+        }
+
 
         public override void Show() {
-            var toast = new ToastPrompt {
+            this.Cancel();
+
+            this.toast = new ToastPrompt {
                 Background = new SolidColorBrush(this.BackgroundColor.ToNative()),
                 Foreground = new SolidColorBrush(this.TextColor.ToNative()),
                 Title = this.Title,
@@ -18,11 +29,11 @@ namespace Acr.UserDialogs {
                 Stretch = Stretch.Fill,
                 MillisecondsUntilHidden = Convert.ToInt32(this.Duration.TotalMilliseconds)
             };
-            //toast.Completed += (sender, args) => {
-            //    if (args.PopUpResult == PopUpResult.Ok)
-            //        this.Action?.Invoke();
-            //};
-            //this.Dispatch(toast.Show);
+            this.toast.Completed += (sender, args) => {
+                if (args.PopUpResult == PopUpResult.Ok)
+                    this.Action?.Invoke();
+            };
+            this.Dispatch(this.toast.Show);
         }
     }
 }

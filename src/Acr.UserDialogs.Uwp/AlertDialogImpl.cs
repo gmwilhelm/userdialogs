@@ -1,6 +1,8 @@
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI.Popups;
 
 
@@ -8,10 +10,18 @@ namespace Acr.UserDialogs {
 
     public class AlertDialogImpl : AlertDialog {
         TaskCompletionSource<bool> tcs;
+        IAsyncOperation<IUICommand> dialogCancel;
+
+
+        public override void Cancel() {
+            base.Cancel();
+            this.dialogCancel?.Cancel();
+            this.tcs?.TrySetCanceled();
+        }
 
 
         public override void Show() {
-            throw new NotImplementedException();
+            this.Request();
         }
 
 
@@ -21,7 +31,7 @@ namespace Acr.UserDialogs {
 
             var dialog = new MessageDialog(this.Message, this.Title);
             dialog.Commands.Add(new UICommand(this.OkText, x => this.tcs.TrySetResult(true)));
-            //this.Dispatch(() => dialog.ShowAsync());
+            this.Dispatch(() => this.dialogCancel = dialog.ShowAsync());
 
             return this.tcs.Task;
         }

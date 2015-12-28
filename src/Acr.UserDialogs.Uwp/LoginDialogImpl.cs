@@ -1,16 +1,28 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.UI.Xaml.Controls;
 
 
 namespace Acr.UserDialogs {
 
     public class LoginDialogImpl : LoginDialog {
+        IAsyncOperation<ContentDialogResult> dialogCancel;
         TaskCompletionSource<LoginResult> tcs;
 
 
+        public override void Cancel() {
+            base.Cancel();
+            this.dialogCancel?.Cancel();
+            this.tcs?.TrySetCanceled();
+        }
+
+
         public override Task<LoginResult> Request(CancellationToken? cancelToken = null) {
+            cancelToken?.Register(this.Cancel);
             var dlg = new LoginContentDialog();
+
             var vm = new LoginViewModel {
                 LoginText = this.OkText,
                 Title = this.Title,
@@ -27,7 +39,7 @@ namespace Acr.UserDialogs {
                 this.tcs.TrySetResult(new LoginResult(vm.UserName, vm.Password, false))
             );
             dlg.DataContext = vm;
-            //this.Dispatch(() => dlg.ShowAsync());
+            this.Dispatch(() => this.dialogCancel = dlg.ShowAsync());
 
             return this.tcs.Task;
         }
