@@ -1,8 +1,5 @@
 using System;
-using Android.Text;
-using Android.Text.Method;
 using Android.Views;
-using Android.Widget;
 
 
 namespace Acr.UserDialogs {
@@ -27,52 +24,6 @@ namespace Acr.UserDialogs {
                 default:
                     throw new ArgumentException("Invalid Mask Type");
             }
-        }
-
-
-        public static TextView SetInputType(this TextView txt, InputType inputType) {
-            switch (inputType) {
-                case InputType.DecimalNumber:
-                    txt.InputType = InputTypes.ClassNumber | InputTypes.NumberFlagDecimal;
-                    txt.SetSingleLine(true);
-                    break;
-
-                case InputType.Email:
-                    txt.InputType = InputTypes.ClassText | InputTypes.TextVariationEmailAddress;
-                    txt.SetSingleLine(true);
-                    break;
-
-				case InputType.Name:
-					txt.InputType = InputTypes.TextVariationPersonName;
-                    txt.SetSingleLine(true);
-					break;
-
-                case InputType.Number:
-                    txt.InputType = InputTypes.ClassNumber;
-                    txt.SetSingleLine(true);
-                    break;
-
-                case InputType.NumericPassword:
-                    txt.InputType = InputTypes.ClassNumber;
-                    txt.TransformationMethod = PasswordTransformationMethod.Instance;
-                    break;
-
-                case InputType.Password:
-                    txt.TransformationMethod = PasswordTransformationMethod.Instance;
-                    txt.InputType = InputTypes.ClassText | InputTypes.TextVariationPassword;
-                    break;
-
-				case InputType.Phone:
-					txt.InputType = InputTypes.ClassPhone;
-                    txt.SetSingleLine(true);
-					break;
-
-				case InputType.Url:
-					txt.InputType = InputTypes.TextVariationUri;
-                    txt.SetSingleLine(true);
-					break;
-            }
-            return txt;
         }
 
 

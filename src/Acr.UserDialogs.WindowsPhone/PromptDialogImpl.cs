@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Phone.Controls;
@@ -13,7 +14,17 @@ namespace Acr.UserDialogs {
         TaskCompletionSource<PromptResult> tcs;
 
 
+        public override void Cancel() {
+            base.Cancel();
+            this.tcs?.TrySetCanceled();
+            this.messageBox?.Dismiss();
+        }
+
+
         public override Task<PromptResult> Request(CancellationToken? cancelToken) {
+            cancelToken?.Register(this.Cancel);
+            this.tcs = new TaskCompletionSource<PromptResult>();
+
             this.messageBox = new CustomMessageBox {
                 Caption = this.Title,
                 Message = this.Message,
@@ -41,7 +52,7 @@ namespace Acr.UserDialogs {
                 args.Result == CustomMessageBoxResult.LeftButton,
                 isSecure ? password.Password : txt.Text.Trim()
             ));
-            //this.Dispatch(prompt.Show);
+            Deployment.Current.Dispatcher.BeginInvoke(this.messageBox.Show);
             return this.tcs.Task;
         }
 

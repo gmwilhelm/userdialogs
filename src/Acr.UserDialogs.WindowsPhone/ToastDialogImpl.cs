@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -10,9 +11,20 @@ using Splat;
 namespace Acr.UserDialogs {
 
     public class ToastDialogImpl : ToastDialog {
+        Popup popup;
+
+
+        public override void Cancel() {
+            base.Cancel();
+            Deployment.Current.Dispatcher.BeginInvoke(() => {
+                SystemTray.BackgroundColor = (Color)Application.Current.Resources["PhoneBackgroundColor"];
+                popup.IsOpen = false;
+            });
+        }
+
 
         public override void Show() {
-                        // TODO: backgroundcolor and image
+            // TODO: backgroundcolor and image
             var resources = Application.Current.Resources;
             var textColor = new SolidColorBrush(this.TextColor.ToNative());
             var bgColor = this.BackgroundColor.ToNative();
@@ -44,26 +56,22 @@ namespace Acr.UserDialogs {
                 });
             }
 
-            var popup = new Popup {
+            this.popup = new Popup {
                 Child = wrapper,
                 HorizontalAlignment = HorizontalAlignment.Stretch
             };
             wrapper.Tap += (sender, args) => {
                 SystemTray.BackgroundColor = (Color)resources["PhoneBackgroundColor"];
-                popup.IsOpen = false;
+                this.popup.IsOpen = false;
                 this.Action?.Invoke();
             };
 
-            //this.Dispatch(() => {
-            //    //SystemTray.BackgroundColor = (Color)resources["PhoneAccentColor"];
-            //    SystemTray.BackgroundColor = bgColor;
-            //    popup.IsOpen = true;
-            //});
-            //Task.Delay(this.Duration)
-            //    .ContinueWith(x => this.Dispatch(() => {
-            //        SystemTray.BackgroundColor = (Color)resources["PhoneBackgroundColor"];
-            //        popup.IsOpen = false;
-            //    }));
+            Deployment.Current.Dispatcher.BeginInvoke(() => {
+                SystemTray.BackgroundColor = bgColor;
+                this.popup.IsOpen = true;
+            });
+            Task.Delay(this.Duration)
+                .ContinueWith(_ => this.Cancel());
         }
     }
 }

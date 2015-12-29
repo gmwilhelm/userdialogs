@@ -9,6 +9,11 @@ namespace Acr.UserDialogs {
 
     public class ActionSheetDialogImpl : ActionSheetDialog {
 
+        public override void Cancel() {
+            base.Cancel();
+        }
+
+
         public override void Show() {
             var sheet = new CustomMessageBox {
                 Caption = this.Title

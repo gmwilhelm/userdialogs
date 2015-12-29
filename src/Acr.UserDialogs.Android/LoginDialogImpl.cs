@@ -37,9 +37,10 @@ namespace Acr.UserDialogs {
                 Text = this.LoginValue ?? String.Empty
             };
             var txtPass = new EditText(this.activity) {
-                Hint = this.PasswordPlaceholder ?? "*"
+                Hint = this.PasswordPlaceholder ?? "*",
+                TransformationMethod = PasswordTransformationMethod.Instance,
+                InputType = InputTypes.ClassText | InputTypes.TextVariationPassword
             };
-            txtPass.SetInputType(InputType.Password);
 
             var layout = new LinearLayout(this.activity) {
                 Orientation = Orientation.Vertical
