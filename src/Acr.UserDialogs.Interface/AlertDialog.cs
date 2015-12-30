@@ -16,7 +16,7 @@ namespace Acr.UserDialogs {
 
 
         public virtual AlertDialog SetOkText(string text) {
-            this.OkText = text;
+            this.OkText = text ?? DefaultOkText;
             return this;
         }
 

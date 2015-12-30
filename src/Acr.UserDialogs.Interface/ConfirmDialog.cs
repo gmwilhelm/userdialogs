@@ -15,13 +15,13 @@ namespace Acr.UserDialogs {
 
 
         public virtual ConfirmDialog SetOkText(string text) {
-            this.OkText = text;
+            this.OkText = text ?? DefaultOkText;
             return this;
         }
 
 
         public virtual ConfirmDialog SetCancelText(string text) {
-            this.CancelText = text;
+            this.CancelText = text ?? DefaultCancelText;
             return this;
         }
 

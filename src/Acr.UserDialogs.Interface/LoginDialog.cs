@@ -31,13 +31,13 @@ namespace Acr.UserDialogs {
 
 
         public virtual LoginDialog SetOkText(string ok) {
-            this.OkText = ok;
+            this.OkText = ok ?? DefaultOkText;
             return this;
         }
 
 
         public virtual LoginDialog SetCancelText(string cancel) {
-            this.CancelText = cancel;
+            this.CancelText = cancel ?? DefaultCancelText;
             return this;
         }
 

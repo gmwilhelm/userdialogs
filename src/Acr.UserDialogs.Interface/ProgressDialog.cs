@@ -5,11 +5,15 @@ namespace Acr.UserDialogs {
 
 	public abstract class ProgressDialog : Dialog {
 
+        // if title or percent complete changes we need to update
         public virtual string Title { get; set; }
 		public virtual int PercentComplete { get; set; }
 		public virtual bool IsDeterministic { get; set; }
         public virtual MaskType MaskType { get; set; } = MaskType.Black;
         public virtual ActionOption CancelOption { get; set; }
+
+
+        public abstract void Show();
 
 
         public virtual ProgressDialog SetCancel(string cancelText = null, Action onCancel = null) {
@@ -39,5 +43,5 @@ namespace Acr.UserDialogs {
         public static string DefaultCancelText { get; set; } = "Cancel";
         public static string DefaultTitle { get; set; } = "Loading";
         public static MaskType DefaultMaskType { get; set; } = MaskType.Black;
-    }
+	}
 }

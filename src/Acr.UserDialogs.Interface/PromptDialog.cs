@@ -39,7 +39,7 @@ namespace Acr.UserDialogs {
 
 
         public virtual PromptDialog SetOkText(string text) {
-            this.OkText = text;
+            this.OkText = text ?? DefaultOkText;
             return this;
         }
 
@@ -52,7 +52,7 @@ namespace Acr.UserDialogs {
 
         public virtual PromptDialog SetCancelText(string cancelText) {
 			this.IsCancellable = true;
-            this.CancelText = cancelText;
+            this.CancelText = cancelText ?? DefaultCancelText;
             return this;
         }
 

@@ -6,6 +6,7 @@ using UIKit;
 namespace Acr.UserDialogs {
 
     public class ProgressDialogImpl : ProgressDialog {
+        // if title or percent complete changes we need to update
 
         //string title;
         //public virtual string Title {
@@ -18,9 +19,6 @@ namespace Acr.UserDialogs {
         //        this.Refresh();
         //    }
         //}
-
-
-        //public MaskType MaskType { get; set; }
 
 
         //int percentComplete;
@@ -41,76 +39,44 @@ namespace Acr.UserDialogs {
         //}
 
 
-        //public virtual bool IsDeterministic { get; set; }
-        //public virtual bool IsShowing { get; private set; }
+        public override void Cancel() {
+            base.Cancel();
+            UIApplication.SharedApplication.InvokeOnMainThread(BTProgressHUD.Dismiss);
+        }
 
 
-        //string cancelText;
-        //Action cancelAction;
-        //public virtual void SetCancel(Action onCancel, string cancel) {
-        //    this.cancelAction = onCancel;
-        //    this.cancelText = cancel;
-        //    this.Refresh();
-        //}
+        protected virtual void Refresh() {
+            if (!this.IsShowing)
+                return;
 
+            var txt = this.Title;
+            float p = -1;
+            if (this.IsDeterministic) {
+                p = (float)this.PercentComplete / 100;
+                if (!String.IsNullOrWhiteSpace(txt))
+                    txt += "... ";
 
-        //public virtual void Show() {
-        //    this.IsShowing = true;
-        //    this.Refresh();
-        //}
+                txt += this.PercentComplete + "%";
+            }
 
-
-        //public virtual void Hide() {
-        //    this.IsShowing = false;
-        //    UIApplication.SharedApplication.InvokeOnMainThread(BTProgressHUD.Dismiss);
-        //}
-
-        //#endregion
-
-        //#region IDisposable Members
-
-        //public virtual void Dispose() {
-        //    this.Hide();
-        //}
-
-        //#endregion
-
-        //#region Internals
-
-        //protected virtual void Refresh() {
-        //    if (!this.IsShowing)
-        //        return;
-
-        //    var txt = this.Title;
-        //    float p = -1;
-        //    if (this.IsDeterministic) {
-        //        p = (float)this.PercentComplete / 100;
-        //        if (!String.IsNullOrWhiteSpace(txt)) {
-        //            txt += "... ";
-        //        }
-        //        txt += this.PercentComplete + "%";
-        //    }
-
-        //    UIApplication.SharedApplication.InvokeOnMainThread(() => {
-        //        if (this.cancelAction == null) {
-        //            BTProgressHUD.Show(
-        //                this.Title,
-        //                p,
-        //                this.MaskType.ToNative()
-        //            );
-        //        }
-        //        else {
-        //            BTProgressHUD.Show(
-        //                this.cancelText,
-        //                this.cancelAction,
-        //                txt,
-        //                p,
-        //                this.MaskType.ToNative()
-        //            );
-        //        }
-        //    });
-        //}
-
-        //#endregion
+            UIApplication.SharedApplication.InvokeOnMainThread(() => {
+                if (this.CancelOption == null) {
+                    BTProgressHUD.Show(
+                        this.Title,
+                        p,
+                        this.MaskType.ToNative()
+                    );
+                }
+                else {
+                    BTProgressHUD.Show(
+                        this.CancelOption.Text,
+                        this.CancelOption.Action,
+                        txt,
+                        p,
+                        this.MaskType.ToNative()
+                    );
+                }
+            });
+        }
     }
 }
