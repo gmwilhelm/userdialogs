@@ -13,6 +13,11 @@ namespace Acr.UserDialogs {
             this.MaskType = MaskType.Black;
         }
 
+
+        public override void Show() {
+            throw new NotImplementedException();
+        }
+
         //      #region IProgressDialog Members
 
         //      string title;

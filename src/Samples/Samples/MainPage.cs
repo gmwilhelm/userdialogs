@@ -45,7 +45,7 @@ namespace Samples {
 	            Btn("Prompt", this.Prompt),
 				Btn("Prompt /w Text/No Cancel", this.PromptWithTextAndNoCancel),
                 Btn("Error", () => UserDialogs.Instance.ShowError("ERROR!")),
-                Btn("Success", () => UserDialogs.Instance.ShowSuccess("ERROR!"))
+                Btn("Success", () => UserDialogs.Instance.ShowSuccess("SUCCESS!"))
             );
 
             this.AddPage(
@@ -130,7 +130,9 @@ namespace Samples {
                 content.Children.Add(view);
 
             this.Children.Add(new NavigationPage(new ContentPage {
-                Content = content,
+                Content = new ScrollView {
+                    Content = content
+                },
                 Title = title
             }) { Title = title });
         }
@@ -263,12 +265,12 @@ namespace Samples {
                 .SetTitle("Prompt!")
                 .SetInputType(inputType)
 				.SetMessage(msg);
-			
+
 			this.dialog = prompt;
 			var r = await prompt.Request();
             this.Result(r.Ok
                 ? "OK " + r.Text
-                : "Prompt Cancelled");			
+                : "Prompt Cancelled");
         }
 
 

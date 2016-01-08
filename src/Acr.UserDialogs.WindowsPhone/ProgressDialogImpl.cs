@@ -5,6 +5,12 @@ using System.Windows;
 namespace Acr.UserDialogs {
 
     public class ProgressDialogImpl : ProgressDialog {
+
+
+        public override void Show() {
+            throw new NotImplementedException();
+        }
+
         //private readonly ProgressPopUp progress = new ProgressPopUp();
 
         //#region IProgressDialog Members

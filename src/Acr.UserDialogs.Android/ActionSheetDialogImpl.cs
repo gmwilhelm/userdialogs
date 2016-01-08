@@ -26,6 +26,11 @@ namespace Acr.UserDialogs {
                 .SetCancelable(false)
                 .SetTitle(this.Title);
 
+                //.SetCustomTitle(new TextView(activity) {
+                //    Text = config.Title,
+                //    TextSize = 18.0f
+                //});
+
             if (this.ItemIcon != null || this.Options.Any(x => x.ItemIcon != null)) {
                 var adapter = new ActionSheetListAdapter(this.activity, Android.Resource.Layout.SelectDialogItem, Android.Resource.Id.Text1, this);
                 dlg.SetAdapter(adapter, (s, a) => this.Options[a.Which].Action?.Invoke());

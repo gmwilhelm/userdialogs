@@ -139,7 +139,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToastDialogImpl.cs" />
     <Compile Include="UserDialogsImpl.cs" />
-    <EmbeddedResource Include="Properties\Acr.UserDialogs.rd.xml" />
+    <None Include="Properties\Acr.UserDialogs.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acr.UserDialogs.Interface\Acr.UserDialogs.Interface.csproj">
