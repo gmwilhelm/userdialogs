@@ -4,10 +4,43 @@
 namespace Acr.UserDialogs {
 
 	public abstract class ProgressDialog : Dialog {
+                // if title or percent complete changes we need to update
 
-        // if title or percent complete changes we need to update
-        public virtual string Title { get; set; }
-		public virtual int PercentComplete { get; set; }
+        //string title;
+        //public virtual string Title {
+        //    get { return this.title; }
+        //    set {
+        //        if (this.title == value)
+        //            return;
+
+        //        this.title = value;
+        //        this.Refresh();
+        //    }
+        //}
+
+
+        string title;
+        public virtual string Title {
+            get;
+            set;
+        }
+
+
+        int percentComplete;
+	    public virtual int PercentComplete {
+	        get { return this.percentComplete; }
+	        set {
+                if (this.percentComplete == value)
+                    return;
+
+                if (value > 100)
+                    this.percentComplete = 100;
+                else if (value < 0)
+                    this.percentComplete = 0;
+                else
+                    this.percentComplete = value;
+            }
+	    }
 		public virtual bool IsDeterministic { get; set; }
         public virtual MaskType MaskType { get; set; } = MaskType.Black;
         public virtual ActionOption CancelOption { get; set; }

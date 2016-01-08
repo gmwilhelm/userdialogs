@@ -39,6 +39,11 @@ namespace Acr.UserDialogs {
         //}
 
 
+        public override void Show() {
+            this.Refresh();
+        }
+
+
         public override void Cancel() {
             base.Cancel();
             UIApplication.SharedApplication.InvokeOnMainThread(BTProgressHUD.Dismiss);
@@ -46,7 +51,7 @@ namespace Acr.UserDialogs {
 
 
         protected virtual void Refresh() {
-            if (!this.IsShowing)
+            if (!this.IsVisible)
                 return;
 
             var txt = this.Title;
