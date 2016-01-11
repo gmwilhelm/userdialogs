@@ -45,7 +45,7 @@
       <Name>Acr.UserDialogs.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Acr.UserDialogs\Acr.UserDialogs.csproj">
-      <Project>{AD34AA53-F275-4F18-A51C-9809C4E1F3BC}</Project>
+      <Project>{ad34aa53-f275-4f18-a51c-9809c4e1f3bc}</Project>
       <Name>Acr.UserDialogs</Name>
     </ProjectReference>
   </ItemGroup>
@@ -68,6 +68,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.0.0.6490\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.0.0.6490\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
