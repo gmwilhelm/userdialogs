@@ -7,7 +7,7 @@ using Windows.UI.Popups;
 
 namespace Acr.UserDialogs {
 
-    public class ConfirmDialogImpl : ConfirmDialog {
+    public class ConfirmDialogImpl : AbstractConfirmDialog {
         TaskCompletionSource<bool> tcs;
         IAsyncOperation<IUICommand> dialogCancel;
 

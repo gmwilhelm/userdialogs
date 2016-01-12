@@ -8,7 +8,7 @@ using Microsoft.Phone.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class LoginDialogImpl : LoginDialog {
+    public class LoginDialogImpl : AbstractLoginDialog {
         CustomMessageBox messageBox;
         TaskCompletionSource<LoginResult> tcs;
 

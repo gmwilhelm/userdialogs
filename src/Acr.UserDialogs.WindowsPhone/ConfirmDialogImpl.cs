@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class ConfirmDialogImpl : ConfirmDialog {
+    public class ConfirmDialogImpl : AbstractConfirmDialog {
         TaskCompletionSource<bool> tcs;
         CustomMessageBox messageBox;
 

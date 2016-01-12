@@ -5,7 +5,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialogImpl : ProgressDialog {
+    public class ProgressDialogImpl : AbstractProgressDialog {
         // if title or percent complete changes we need to update
 
         //string title;

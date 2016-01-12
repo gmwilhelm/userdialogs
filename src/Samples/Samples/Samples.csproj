@@ -47,6 +47,7 @@
     <ProjectReference Include="..\..\Acr.UserDialogs\Acr.UserDialogs.csproj">
       <Project>{ad34aa53-f275-4f18-a51c-9809c4e1f3bc}</Project>
       <Name>Acr.UserDialogs</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Acr.UserDialogs {
 
-    public abstract class PromptDialog : Dialog {
+    public abstract class AbstractPromptDialog : AbstractDialog, IPromptDialog {
 
         public virtual string Title { get; set; }
         public virtual string Message { get; set; }
         public virtual string PlaceholderText { get; set; }
-        public bool IsCancellable { get; set; } = true;
-		public string Text { get; set; } // TODO: could make this INPC with text
+        public virtual bool IsCancellable { get; set; } = true;
+		public virtual string Text { get; set; } // TODO: could make this INPC with text
         public virtual InputType InputType { get; set; }
         public virtual string OkText { get; set; } = DefaultOkText;
         public virtual string CancelText { get; set; } = DefaultCancelText;
@@ -20,50 +20,50 @@ namespace Acr.UserDialogs {
         public abstract Task<PromptResult> Request(CancellationToken? cancelToken = null);
 
 
-        public virtual PromptDialog SetTitle(string title) {
+        public virtual IPromptDialog SetTitle(string title) {
             this.Title = title;
             return this;
         }
 
 
-        public virtual PromptDialog SetMessage(string message) {
+        public virtual IPromptDialog SetMessage(string message) {
             this.Message = message;
             return this;
         }
 
 
-		public virtual PromptDialog SetCancellable(bool cancel) {
+		public virtual IPromptDialog SetCancellable(bool cancel) {
 			this.IsCancellable = cancel;
 			return this;
 		}
 
 
-        public virtual PromptDialog SetOkText(string text) {
+        public virtual IPromptDialog SetOkText(string text) {
             this.OkText = text ?? DefaultOkText;
             return this;
         }
 
 
-		public virtual PromptDialog SetText(string text) {
+		public virtual IPromptDialog SetText(string text) {
 			this.Text = text;
 			return this;
 		}
 
 
-        public virtual PromptDialog SetCancelText(string cancelText) {
+        public virtual IPromptDialog SetCancelText(string cancelText) {
 			this.IsCancellable = true;
             this.CancelText = cancelText ?? DefaultCancelText;
             return this;
         }
 
 
-        public virtual PromptDialog SetPlaceholderText(string placeholder) {
+        public virtual IPromptDialog SetPlaceholderText(string placeholder) {
             this.PlaceholderText = placeholder;
             return this;
         }
 
 
-        public virtual PromptDialog SetInputType(InputType inputType) {
+        public virtual IPromptDialog SetInputType(InputType inputType) {
             this.InputType = inputType;
             return this;
         }

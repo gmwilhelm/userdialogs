@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class PromptDialogImpl : PromptDialog {
+    public class PromptDialogImpl : AbstractPromptDialog {
         IAsyncOperation<ContentDialogResult> dialogCancel;
         TaskCompletionSource<PromptResult> tcs;
 

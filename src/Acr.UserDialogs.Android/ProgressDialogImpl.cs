@@ -4,7 +4,7 @@ using Android.App;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialogImpl : ProgressDialog {
+    public class ProgressDialogImpl : AbstractProgressDialog {
         readonly Activity activity;
 
 

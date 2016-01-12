@@ -3,7 +3,7 @@
 
 namespace Acr.UserDialogs {
 
-    public abstract class Dialog : IDisposable {
+    public abstract class AbstractDialog : IDisposable {
 
 
         public virtual void Cancel() {

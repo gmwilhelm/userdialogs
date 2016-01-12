@@ -3,7 +3,7 @@
 
 namespace Acr.UserDialogs {
 
-	public abstract class ProgressDialog : Dialog {
+	public abstract class AbstractProgressDialog : AbstractDialog, IProgressDialog {
                 // if title or percent complete changes we need to update
 
         //string title;
@@ -49,25 +49,25 @@ namespace Acr.UserDialogs {
         public abstract void Show();
 
 
-        public virtual ProgressDialog SetCancel(string cancelText = null, Action onCancel = null) {
+        public virtual IProgressDialog SetCancel(string cancelText = null, Action onCancel = null) {
             this.CancelOption = new ActionOption(cancelText ?? DefaultCancelText, onCancel);
             return this;
         }
 
 
-        public virtual ProgressDialog SetTitle(string title) {
+        public virtual IProgressDialog SetTitle(string title) {
             this.Title = title;
             return this;
         }
 
 
-        public virtual ProgressDialog SetMaskType(MaskType maskType) {
+        public virtual IProgressDialog SetMaskType(MaskType maskType) {
             this.MaskType = maskType;
             return this;
         }
 
 
-        public virtual ProgressDialog SetIsDeterministic(bool isDeterministic) {
+        public virtual IProgressDialog SetIsDeterministic(bool isDeterministic) {
             this.IsDeterministic = isDeterministic;
             return this;
         }

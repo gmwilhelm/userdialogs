@@ -5,7 +5,7 @@ using Windows.UI.Core;
 
 namespace Acr.UserDialogs {
 
-    public class ActionSheetDialogImpl : ActionSheetDialog {
+    public class ActionSheetDialogImpl : AbstractActionSheetDialog {
         ActionSheetContentDialog dialog;
 
 

@@ -7,7 +7,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class ConfirmDialogImpl : ConfirmDialog {
+    public class ConfirmDialogImpl : AbstractConfirmDialog {
         readonly AlertDialogManager<bool> manager = new AlertDialogManager<bool>();
 
         public override async Task<bool> Request(CancellationToken? cancelToken = null) {

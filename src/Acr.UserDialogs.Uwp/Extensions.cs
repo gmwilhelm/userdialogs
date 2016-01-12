@@ -6,7 +6,7 @@ namespace Acr.UserDialogs {
 
     public static class Extensions {
 
-        public static void Dispatch(this Dialog dialog, Action action) {
+        public static void Dispatch(this AbstractDialog dialog, Action action) {
             CoreWindow
                 .GetForCurrentThread()
                 .Dispatcher

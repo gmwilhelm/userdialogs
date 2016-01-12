@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Acr.UserDialogs {
 
-    public abstract class AlertDialog : Dialog {
+    public abstract class AbstractAlertDialog : AbstractDialog, IAlertDialog {
 
         public virtual string Title { get; set; }
         public virtual string Message { get; set; }
@@ -15,19 +15,19 @@ namespace Acr.UserDialogs {
         public abstract Task Request(CancellationToken? cancelToken = null);
 
 
-        public virtual AlertDialog SetOkText(string text) {
+        public virtual IAlertDialog SetOkText(string text) {
             this.OkText = text ?? DefaultOkText;
             return this;
         }
 
 
-        public virtual AlertDialog SetTitle(string title) {
+        public virtual IAlertDialog SetTitle(string title) {
             this.Title = title;
             return this;
         }
 
 
-        public virtual AlertDialog SetMessage(string message) {
+        public virtual IAlertDialog SetMessage(string message) {
             this.Message = message;
             return this;
         }

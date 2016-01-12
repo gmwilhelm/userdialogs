@@ -7,7 +7,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class AlertDialogImpl : AlertDialog {
+    public class AlertDialogImpl : AbstractAlertDialog {
         readonly AlertDialogManager<bool> manager = new AlertDialogManager<bool>();
 
 

@@ -7,7 +7,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class PromptDialogImpl : PromptDialog {
+    public class PromptDialogImpl : AbstractPromptDialog {
         readonly AlertDialogManager<PromptResult> manager = new AlertDialogManager<PromptResult>();
 
 

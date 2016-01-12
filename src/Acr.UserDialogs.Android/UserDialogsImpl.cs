@@ -16,37 +16,37 @@ namespace Acr.UserDialogs {
         }
 
 
-        public override ActionSheetDialog ActionSheetBuilder() {
+        public override IActionSheetDialog ActionSheetBuilder() {
             return new ActionSheetDialogImpl(this.GetTopActivity());
         }
 
 
-        public override AlertDialog AlertBuilder() {
+        public override IAlertDialog AlertBuilder() {
             return new AlertDialogImpl(this.GetTopActivity());
         }
 
 
-        public override ConfirmDialog ConfirmBuilder() {
+        public override IConfirmDialog ConfirmBuilder() {
             return new ConfirmDialogImpl(this.GetTopActivity());
         }
 
 
-        public override LoginDialog LoginBuilder() {
+        public override ILoginDialog LoginBuilder() {
             return new LoginDialogImpl(this.GetTopActivity());
         }
 
 
-        public override ProgressDialog ProgressBuilder() {
+        public override IProgressDialog ProgressBuilder() {
             return new ProgressDialogImpl(this.GetTopActivity());
         }
 
 
-        public override PromptDialog PromptBuilder() {
+        public override IPromptDialog PromptBuilder() {
             return new PromptDialogImpl(this.GetTopActivity());
         }
 
 
-        public override ToastDialog ToastBuilder() {
+        public override IToastDialog ToastBuilder() {
             return new ToastDialogImpl(this.GetTopActivity());
         }
 

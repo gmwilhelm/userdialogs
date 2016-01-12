@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace Acr.UserDialogs {
 
-    public class ProgressDialogImpl : ProgressDialog {
+    public class ProgressDialogImpl : AbstractProgressDialog {
 
 
         public override void Show() {

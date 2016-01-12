@@ -6,7 +6,7 @@ using Splat;
 
 namespace Acr.UserDialogs {
 
-    public class ToastDialogImpl : ToastDialog {
+    public class ToastDialogImpl : AbstractToastDialog {
         ToastPrompt toast;
 
 

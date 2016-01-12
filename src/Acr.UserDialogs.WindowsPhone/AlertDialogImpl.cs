@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class AlertDialogImpl : AlertDialog {
+    public class AlertDialogImpl : AbstractAlertDialog {
         TaskCompletionSource<bool> tcs;
         CustomMessageBox alert;
 

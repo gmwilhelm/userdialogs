@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class LoginDialogImpl : LoginDialog {
+    public class LoginDialogImpl : AbstractLoginDialog {
         IAsyncOperation<ContentDialogResult> dialogCancel;
         TaskCompletionSource<LoginResult> tcs;
 

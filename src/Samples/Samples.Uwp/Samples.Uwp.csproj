@@ -93,6 +93,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples.dll" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +132,9 @@
       <Project>{6a0ae941-711d-4c36-a311-960b65534b22}</Project>
       <Name>Acr.UserDialogs.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Samples\Samples.csproj">
-      <Project>{74cee6c1-4ce8-4279-82af-d5a5ddd76d18}</Project>
-      <Name>Samples</Name>
+    <ProjectReference Include="..\..\Acr.UserDialogs.Uwp\Acr.UserDialogs.Uwp.csproj">
+      <Project>{e7273c26-d3e3-4161-b464-69cd6fe606b1}</Project>
+      <Name>Acr.UserDialogs.Uwp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -142,10 +143,19 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Samples, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Samples.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy $(SolutionDir)\Samples\Samples\bin\Debug\Samples.dll $(ProjectDir)\Samples.dll</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

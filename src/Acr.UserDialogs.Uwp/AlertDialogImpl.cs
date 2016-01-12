@@ -8,7 +8,7 @@ using Windows.UI.Popups;
 
 namespace Acr.UserDialogs {
 
-    public class AlertDialogImpl : AlertDialog {
+    public class AlertDialogImpl : AbstractAlertDialog {
         TaskCompletionSource<bool> tcs;
         IAsyncOperation<IUICommand> dialogCancel;
 

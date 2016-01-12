@@ -7,10 +7,10 @@ using UIKit;
 namespace Acr.UserDialogs {
 
     public class AcrMessageBarStyleSheet : MessageBarStyleSheet {
-        readonly ToastDialog config;
+        readonly AbstractToastDialog config;
 
 
-        public AcrMessageBarStyleSheet(ToastDialog config) {
+        public AcrMessageBarStyleSheet(AbstractToastDialog config) {
             this.config = config;
         }
 

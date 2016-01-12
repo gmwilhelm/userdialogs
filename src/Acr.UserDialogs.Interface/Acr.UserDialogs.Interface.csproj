@@ -39,15 +39,23 @@
     </Compile>
     <Compile Include="AbstractUserDialogs.cs" />
     <Compile Include="ActionOption.cs" />
-    <Compile Include="ActionSheetDialog.cs" />
-    <Compile Include="ConfirmDialog.cs" />
-    <Compile Include="AlertDialog.cs" />
-    <Compile Include="LoginDialog.cs" />
-    <Compile Include="PromptDialog.cs" />
-    <Compile Include="Dialog.cs" />
+    <Compile Include="AbstractActionSheetDialog.cs" />
+    <Compile Include="AbstractConfirmDialog.cs" />
+    <Compile Include="AbstractAlertDialog.cs" />
+    <Compile Include="IActionSheetDialog.cs" />
+    <Compile Include="IAlertDialog.cs" />
+    <Compile Include="IConfirmDialog.cs" />
+    <Compile Include="IDialog.cs" />
+    <Compile Include="ILoginDialog.cs" />
+    <Compile Include="IProgressDialog.cs" />
+    <Compile Include="IPromptDialog.cs" />
+    <Compile Include="IToastDialog.cs" />
+    <Compile Include="AbstractLoginDialog.cs" />
+    <Compile Include="AbstractPromptDialog.cs" />
+    <Compile Include="AbstractDialog.cs" />
     <Compile Include="InputType.cs" />
-    <Compile Include="ProgressDialog.cs" />
-    <Compile Include="ToastDialog.cs" />
+    <Compile Include="AbstractProgressDialog.cs" />
+    <Compile Include="AbstractToastDialog.cs" />
     <Compile Include="IUserDialogs.cs" />
     <Compile Include="LoginResult.cs" />
     <Compile Include="MaskType.cs" />
@@ -65,6 +73,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

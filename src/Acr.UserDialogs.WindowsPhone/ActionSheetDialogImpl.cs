@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class ActionSheetDialogImpl : ActionSheetDialog {
+    public class ActionSheetDialogImpl : AbstractActionSheetDialog {
 
         public override void Cancel() {
             base.Cancel();

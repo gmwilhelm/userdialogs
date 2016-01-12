@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Acr.UserDialogs {
 
-    public abstract class ConfirmDialog : Dialog {
+    public abstract class AbstractConfirmDialog : AbstractDialog, IConfirmDialog {
 
         public virtual string Title { get; set; }
         public virtual string Message { get; set; }
@@ -14,31 +14,31 @@ namespace Acr.UserDialogs {
         public abstract Task<bool> Request(CancellationToken? cancelToken = null);
 
 
-        public virtual ConfirmDialog SetOkText(string text) {
+        public virtual IConfirmDialog SetOkText(string text) {
             this.OkText = text ?? DefaultOkText;
             return this;
         }
 
 
-        public virtual ConfirmDialog SetCancelText(string text) {
+        public virtual IConfirmDialog SetCancelText(string text) {
             this.CancelText = text ?? DefaultCancelText;
             return this;
         }
 
 
-        public virtual ConfirmDialog SetTitle(string title) {
+        public virtual IConfirmDialog SetTitle(string title) {
             this.Title = title;
             return this;
         }
 
 
-        public virtual ConfirmDialog SetMessage(string message) {
+        public virtual IConfirmDialog SetMessage(string message) {
             this.Message = message;
             return this;
         }
 
 
-        public virtual ConfirmDialog SetYesNoButtons(string yesText = null, string noText = null) {
+        public virtual IConfirmDialog SetYesNoButtons(string yesText = null, string noText = null) {
             this.OkText = yesText ?? DefaultYes;
             this.CancelText = noText ?? DefaultNo;
             return this;

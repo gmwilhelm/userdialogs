@@ -15,7 +15,7 @@ using AD = Android.App.AlertDialog;
 
 namespace Acr.UserDialogs {
 
-    public class LoginDialogImpl : LoginDialog {
+    public class LoginDialogImpl : AbstractLoginDialog {
         readonly Activity activity;
         TaskCompletionSource<LoginResult> tcs;
         AD dialog;

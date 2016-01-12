@@ -8,13 +8,13 @@ namespace Acr.UserDialogs {
 
     public abstract class AbstractUserDialogs : IUserDialogs {
 
-        public abstract ActionSheetDialog ActionSheetBuilder();
-        public abstract AlertDialog AlertBuilder();
-        public abstract ConfirmDialog ConfirmBuilder();
-        public abstract LoginDialog LoginBuilder();
-        public abstract ProgressDialog ProgressBuilder();
-        public abstract PromptDialog PromptBuilder();
-        public abstract ToastDialog ToastBuilder();
+        public abstract IActionSheetDialog ActionSheetBuilder();
+        public abstract IAlertDialog AlertBuilder();
+        public abstract IConfirmDialog ConfirmBuilder();
+        public abstract ILoginDialog LoginBuilder();
+        public abstract IProgressDialog ProgressBuilder();
+        public abstract IPromptDialog PromptBuilder();
+        public abstract IToastDialog ToastBuilder();
 
         public abstract void ShowImage(IBitmap image, string message, int timeoutMillis);
         public abstract void ShowError(string message, int timeoutMillis);
@@ -76,17 +76,17 @@ namespace Acr.UserDialogs {
         }
 
 
-        public virtual ProgressDialog Loading(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null) {
+        public virtual IProgressDialog Loading(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null) {
             throw new NotImplementedException();
         }
 
 
-        public virtual ProgressDialog Progress(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null) {
+        public virtual IProgressDialog Progress(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null) {
             throw new NotImplementedException();
         }
 
 
-        ProgressDialog showLoading;
+        IProgressDialog showLoading;
         public virtual void ShowLoading(string title = null, MaskType? maskType = null) {
             if (this.showLoading == null)
                 this.showLoading = this.Loading(title, null, null, true, maskType);

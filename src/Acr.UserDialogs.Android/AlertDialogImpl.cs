@@ -11,7 +11,7 @@ using AD = Android.App.AlertDialog;
 
 namespace Acr.UserDialogs {
 
-    public class AlertDialogImpl : AlertDialog {
+    public class AlertDialogImpl : AbstractAlertDialog {
         readonly Activity activity;
         TaskCompletionSource<bool> tcs;
         AD dialog;

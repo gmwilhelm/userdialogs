@@ -5,7 +5,7 @@ using Splat;
 
 namespace Acr.UserDialogs {
 
-    public abstract class ToastDialog : Dialog {
+    public abstract class AbstractToastDialog : AbstractDialog, IToastDialog {
         public virtual ToastPosition Position { get; set; } = ToastPosition.Top; // only works on iOS at the moment
 
         public abstract void Show();
@@ -20,7 +20,7 @@ namespace Acr.UserDialogs {
         public virtual Action Action { get; set; }
 
 
-        public virtual ToastDialog SetEvent(ToastEvent @event) {
+        public virtual IToastDialog SetEvent(ToastEvent @event) {
             switch (@event) {
                 case ToastEvent.Info:
                     this.BackgroundColor = InfoBackgroundColor;
@@ -50,43 +50,43 @@ namespace Acr.UserDialogs {
         }
 
 
-        public virtual ToastDialog SetTitle(string title) {
+        public virtual IToastDialog SetTitle(string title) {
             this.Title = title;
             return this;
         }
 
 
-        public virtual ToastDialog SetDescription(string description) {
+        public virtual IToastDialog SetDescription(string description) {
             this.Description = description;
             return this;
         }
 
 
-        public virtual ToastDialog SetDuration(int millis) {
+        public virtual IToastDialog SetDuration(int millis) {
             return this.SetDuration(TimeSpan.FromMilliseconds(millis));
         }
 
 
-        public virtual ToastDialog SetDuration(TimeSpan duration) {
+        public virtual IToastDialog SetDuration(TimeSpan duration) {
             this.Duration = duration;
             return this;
         }
 
 
-        public virtual ToastDialog SetIcon(IBitmap bitmap) {
+        public virtual IToastDialog SetIcon(IBitmap bitmap) {
             this.Icon = bitmap;
             return this;
         }
 
 
-        public virtual ToastDialog SetColorList(Color? bg, Color? text) {
+        public virtual IToastDialog SetColorList(Color? bg, Color? text) {
             if (bg != null) this.BackgroundColor = bg.Value;
             if (text != null) this.TextColor = text.Value;
             return this;
         }
 
 
-        public virtual ToastDialog SetAction(Action action) {
+        public virtual IToastDialog SetAction(Action action) {
             this.Action = action;
             return this;
         }

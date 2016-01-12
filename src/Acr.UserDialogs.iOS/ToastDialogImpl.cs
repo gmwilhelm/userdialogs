@@ -6,7 +6,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class ToastDialogImpl : ToastDialog {
+    public class ToastDialogImpl : AbstractToastDialog {
         static readonly Timer timer = new Timer();
 
 

@@ -8,37 +8,37 @@ namespace Acr.UserDialogs {
 
     public class UserDialogsImpl : AbstractUserDialogs {
 
-        public override ActionSheetDialog ActionSheetBuilder() {
+        public override IActionSheetDialog ActionSheetBuilder() {
             return new ActionSheetDialogImpl();
         }
 
 
-        public override AlertDialog AlertBuilder() {
+        public override IAlertDialog AlertBuilder() {
             return new AlertDialogImpl();
         }
 
 
-        public override ConfirmDialog ConfirmBuilder() {
+        public override IConfirmDialog ConfirmBuilder() {
             return new ConfirmDialogImpl();
         }
 
 
-        public override LoginDialog LoginBuilder() {
+        public override ILoginDialog LoginBuilder() {
             return new LoginDialogImpl();
         }
 
 
-        public override ProgressDialog ProgressBuilder() {
+        public override IProgressDialog ProgressBuilder() {
             return new ProgressDialogImpl();
         }
 
 
-        public override PromptDialog PromptBuilder() {
+        public override IPromptDialog PromptBuilder() {
             return new PromptDialogImpl();
         }
 
 
-        public override ToastDialog ToastBuilder() {
+        public override IToastDialog ToastBuilder() {
             return new ToastDialogImpl();
         }
 

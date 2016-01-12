@@ -9,7 +9,7 @@ using Microsoft.Phone.Controls;
 
 namespace Acr.UserDialogs {
 
-    public class PromptDialogImpl : PromptDialog {
+    public class PromptDialogImpl : AbstractPromptDialog {
         CustomMessageBox messageBox;
         TaskCompletionSource<PromptResult> tcs;
 

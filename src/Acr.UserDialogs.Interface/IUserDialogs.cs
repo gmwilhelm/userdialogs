@@ -10,35 +10,35 @@ namespace Acr.UserDialogs {
 
         // ACTION SHEET
         Task<string> ActionSheetAsync(string title, string cancel, string destructive, params string[] buttons);
-        ActionSheetDialog ActionSheetBuilder();
+        IActionSheetDialog ActionSheetBuilder();
 
 
         // ALERT
-        AlertDialog AlertBuilder();
+        IAlertDialog AlertBuilder();
         void Alert(string message, string title = null, string okText = null);
         Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null);
 
 
         // CONFIRM
         Task<bool> ConfirmAsync(string message, string title = null, string okText = null, string cancelText = null, CancellationToken? cancelToken = null);
-        ConfirmDialog ConfirmBuilder();
+        IConfirmDialog ConfirmBuilder();
 
 
         // LOGIN
-        LoginDialog LoginBuilder();
+        ILoginDialog LoginBuilder();
         Task<LoginResult> LoginAsync(string title = null, string message = null, CancellationToken? cancelToken = null);
 
 
         // PROGRESS
-        ProgressDialog ProgressBuilder();
-		ProgressDialog Loading(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null);
-		ProgressDialog Progress(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null);
+        IProgressDialog ProgressBuilder();
+		IProgressDialog Loading(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null);
+		IProgressDialog Progress(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null);
 		void ShowLoading(string title = null, MaskType? maskType = null);
         void HideLoading();
 
 
         // PROMPT
-        PromptDialog PromptBuilder();
+        IPromptDialog PromptBuilder();
         Task<PromptResult> PromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default, CancellationToken? cancelToken = null);
 
 
@@ -51,6 +51,6 @@ namespace Acr.UserDialogs {
         void SuccessToast(string title, string description = null, int timeoutMillis = 3000);
         void WarnToast(string title, string description = null, int timeoutMillis = 3000);
         void ErrorToast(string title, string description = null, int timeoutMillis = 3000);
-        ToastDialog ToastBuilder();
+        IToastDialog ToastBuilder();
     }
 }

@@ -9,10 +9,10 @@ using Splat;
 namespace Acr.UserDialogs {
 
     public class ActionSheetListAdapter : ArrayAdapter<ActionOption> {
-        readonly ActionSheetDialog config;
+        readonly AbstractActionSheetDialog config;
 
 
-        public ActionSheetListAdapter(Context context, int resource, int textViewResourceId, ActionSheetDialog config)
+        public ActionSheetListAdapter(Context context, int resource, int textViewResourceId, AbstractActionSheetDialog config)
                 : base(context, resource, textViewResourceId, config.Options) {
             this.config = config;
         }

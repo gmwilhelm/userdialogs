@@ -8,7 +8,7 @@ using UIKit;
 
 namespace Acr.UserDialogs {
 
-    public class ActionSheetDialogImpl : ActionSheetDialog {
+    public class ActionSheetDialogImpl : AbstractActionSheetDialog {
         UIActionSheet oldSheet;
         UIAlertController newSheet;
 

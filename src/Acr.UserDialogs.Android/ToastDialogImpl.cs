@@ -5,7 +5,7 @@ using AndroidHUD;
 
 namespace Acr.UserDialogs {
 
-    public class ToastDialogImpl : ToastDialog {
+    public class ToastDialogImpl : AbstractToastDialog {
         readonly Activity activity;
 
 

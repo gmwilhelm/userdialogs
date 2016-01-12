@@ -10,7 +10,7 @@ namespace Samples {
 
     public class MainPage : TabbedPage {
 		bool autoDismiss = false;
-		Dialog dialog;
+		IDialog dialog;
 
 
 
@@ -73,48 +73,48 @@ namespace Samples {
                 "Settings/Themes",
                 Btn("Change Default Settings", () => {
                     // CANCEL
-                    ActionSheetDialog.DefaultCancelText = ConfirmDialog.DefaultCancelText = LoginDialog.DefaultCancelText = PromptDialog.DefaultCancelText = ProgressDialog.DefaultCancelText = "NO WAY";
+                    AbstractActionSheetDialog.DefaultCancelText = AbstractConfirmDialog.DefaultCancelText = AbstractLoginDialog.DefaultCancelText = AbstractPromptDialog.DefaultCancelText = AbstractProgressDialog.DefaultCancelText = "NO WAY";
 
                     // OK
-                    AlertDialog.DefaultOkText = ConfirmDialog.DefaultOkText = LoginDialog.DefaultOkText = PromptDialog.DefaultOkText = "Sure";
+                    AbstractAlertDialog.DefaultOkText = AbstractConfirmDialog.DefaultOkText = AbstractLoginDialog.DefaultOkText = AbstractPromptDialog.DefaultOkText = "Sure";
 
                     // CUSTOM
-                    ActionSheetDialog.DefaultDestructiveText = "BOOM!";
-                    ConfirmDialog.DefaultYes = "SIGN LIFE AWAY";
-                    ConfirmDialog.DefaultNo = "NO WAY";
-                    LoginDialog.DefaultTitle = "HIGH SECURITY";
-                    LoginDialog.DefaultLoginPlaceholder = "WHO ARE YOU?";
-                    LoginDialog.DefaultPasswordPlaceholder = "SUPER SECRET PASSWORD";
-                    ProgressDialog.DefaultTitle = "WAIT A MINUTE";
+                    AbstractActionSheetDialog.DefaultDestructiveText = "BOOM!";
+                    AbstractConfirmDialog.DefaultYes = "SIGN LIFE AWAY";
+                    AbstractConfirmDialog.DefaultNo = "NO WAY";
+                    AbstractLoginDialog.DefaultTitle = "HIGH SECURITY";
+                    AbstractLoginDialog.DefaultLoginPlaceholder = "WHO ARE YOU?";
+                    AbstractLoginDialog.DefaultPasswordPlaceholder = "SUPER SECRET PASSWORD";
+                    AbstractProgressDialog.DefaultTitle = "WAIT A MINUTE";
 
                     // TOAST
-                    ToastDialog.DefaultDuration = TimeSpan.FromSeconds(5);
+                    AbstractToastDialog.DefaultDuration = TimeSpan.FromSeconds(5);
 
-                    ToastDialog.InfoBackgroundColor = System.Drawing.Color.Aqua;
-                    ToastDialog.SuccessTextColor = System.Drawing.Color.Blue;
-                    ToastDialog.SuccessBackgroundColor = System.Drawing.Color.BurlyWood;
-                    ToastDialog.WarnBackgroundColor = System.Drawing.Color.BlueViolet;
-                    ToastDialog.ErrorBackgroundColor = System.Drawing.Color.DeepPink;
+                    AbstractToastDialog.InfoBackgroundColor = System.Drawing.Color.Aqua;
+                    AbstractToastDialog.SuccessTextColor = System.Drawing.Color.Blue;
+                    AbstractToastDialog.SuccessBackgroundColor = System.Drawing.Color.BurlyWood;
+                    AbstractToastDialog.WarnBackgroundColor = System.Drawing.Color.BlueViolet;
+                    AbstractToastDialog.ErrorBackgroundColor = System.Drawing.Color.DeepPink;
 
                     UserDialogs.Instance.Alert("Default Settings Updated - Now run samples");
                 }),
                 Btn("Reset Default Settings", () => {
                     // CANCEL
-                    ActionSheetDialog.DefaultCancelText = ConfirmDialog.DefaultCancelText = LoginDialog.DefaultCancelText = PromptDialog.DefaultCancelText = ProgressDialog.DefaultCancelText = "Cancel";
+                    AbstractActionSheetDialog.DefaultCancelText = AbstractConfirmDialog.DefaultCancelText = AbstractLoginDialog.DefaultCancelText = AbstractPromptDialog.DefaultCancelText = AbstractProgressDialog.DefaultCancelText = "Cancel";
 
                     // OK
-                    AlertDialog.DefaultOkText = ConfirmDialog.DefaultOkText = LoginDialog.DefaultOkText = PromptDialog.DefaultOkText = "Ok";
+                    AbstractAlertDialog.DefaultOkText = AbstractConfirmDialog.DefaultOkText = AbstractLoginDialog.DefaultOkText = AbstractPromptDialog.DefaultOkText = "Ok";
 
                     // CUSTOM
-                    ActionSheetDialog.DefaultDestructiveText = "Remove";
-                    ConfirmDialog.DefaultYes = "Yes";
-                    ConfirmDialog.DefaultNo = "No";
-                    LoginDialog.DefaultTitle = "Login";
-                    LoginDialog.DefaultLoginPlaceholder = "User Name";
-                    LoginDialog.DefaultPasswordPlaceholder = "Password";
-                    ProgressDialog.DefaultTitle = "Loading";
+                    AbstractActionSheetDialog.DefaultDestructiveText = "Remove";
+                    AbstractConfirmDialog.DefaultYes = "Yes";
+                    AbstractConfirmDialog.DefaultNo = "No";
+                    AbstractLoginDialog.DefaultTitle = "Login";
+                    AbstractLoginDialog.DefaultLoginPlaceholder = "User Name";
+                    AbstractLoginDialog.DefaultPasswordPlaceholder = "Password";
+                    AbstractProgressDialog.DefaultTitle = "Loading";
 
-                    ToastDialog.DefaultDuration = TimeSpan.FromSeconds(3);
+                    AbstractToastDialog.DefaultDuration = TimeSpan.FromSeconds(3);
 
                     UserDialogs.Instance.Alert("Default Settings Restored");
 

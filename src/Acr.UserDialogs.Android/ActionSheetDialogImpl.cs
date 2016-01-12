@@ -10,7 +10,7 @@ using AD = Android.App.AlertDialog;
 
 namespace Acr.UserDialogs {
 
-    public class ActionSheetDialogImpl : ActionSheetDialog {
+    public class ActionSheetDialogImpl : AbstractActionSheetDialog {
         readonly Activity activity;
         AD dialog;
 
