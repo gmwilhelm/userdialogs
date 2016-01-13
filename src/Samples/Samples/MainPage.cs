@@ -17,15 +17,15 @@ namespace Samples {
         public MainPage() {
 			var btnAutoDismiss = new Button { Text = "Enable Auto-Dismiss" };
 			btnAutoDismiss.Clicked += (sender, e) => {
-				autoDismiss = !autoDismiss;
-				btnAutoDismiss.Text = autoDismiss
+				this.autoDismiss = !this.autoDismiss;
+				btnAutoDismiss.Text = this.autoDismiss
 					? "Disable Auto-Dismiss"
 					: "Enable Auto-Dismiss";
 			};
 			Task.Run(async () => {
 				while (true) {
 					await Task.Delay(TimeSpan.FromSeconds(3));
-					if (autoDismiss)
+					if (this.autoDismiss)
 						this.dialog?.Cancel();
 				}
 			});
@@ -37,13 +37,13 @@ namespace Samples {
             this.AddPage(
                 "Standard Dialogs",
 				btnAutoDismiss,
-                Btn("Alert", this.Alert),
+                Btn("Alert", this.Alert()),
                 Btn("ActionSheet", this.ActionSheet),
-                Btn("ActionSheet (async)", this.ActionSheetAsync),
-                Btn("Confirm", this.Confirm),
-                Btn("Login", this.Login),
+                Btn("ActionSheet (async)", this.ActionSheetAsync()),
+                Btn("Confirm", this.Confirm()),
+                Btn("Login", this.Login()),
 	            Btn("Prompt", this.Prompt),
-				Btn("Prompt /w Text/No Cancel", this.PromptWithTextAndNoCancel),
+				Btn("Prompt /w Text/No Cancel", this.PromptWithTextAndNoCancel()),
                 Btn("Error", () => UserDialogs.Instance.ShowError("ERROR!")),
                 Btn("Success", () => UserDialogs.Instance.ShowSuccess("SUCCESS!"))
             );
@@ -138,10 +138,28 @@ namespace Samples {
         }
 
 
+        static Button Btn(string text, Task action) {
+            return new Button {
+                Text = text,
+                Command = new Command(async () => {
+                    try {
+                        await action;
+                    }
+                    catch (OperationCanceledException) { }
+                })
+            };
+        }
+
+
         static Button Btn(string text, Action action) {
             return new Button {
                 Text = text,
-                Command = new Command(action)
+                Command = new Command(() => {
+                    try {
+                        action();
+                    }
+                    catch (OperationCanceledException) { }
+                })
             };
         }
 
@@ -151,7 +169,7 @@ namespace Samples {
         }
 
 
-        async void Alert() {
+        async Task Alert() {
 			var alert = UserDialogs
 				.Instance
 				.AlertBuilder()
@@ -186,13 +204,13 @@ namespace Samples {
         }
 
 
-        public async void ActionSheetAsync() {
+        public async Task ActionSheetAsync() {
             var result = await UserDialogs.Instance.ActionSheetAsync("Test Title", "Cancel", "Destroy", "Button1", "Button2", "Button3");
             this.Result(result);
         }
 
 
-        async void Confirm() {
+        async Task Confirm() {
             var confirm = UserDialogs
                 .Instance
                 .ConfirmBuilder()
@@ -207,7 +225,7 @@ namespace Samples {
         }
 
 
-        async void Login() {
+        async Task Login() {
 			var login = UserDialogs
 				.Instance
                 .LoginBuilder()
@@ -243,7 +261,7 @@ namespace Samples {
 		}
 
 
-		async void PromptWithTextAndNoCancel() {
+		async Task PromptWithTextAndNoCancel() {
 			var prompt = UserDialogs
                 .Instance
                 .PromptBuilder()
@@ -256,21 +274,24 @@ namespace Samples {
 		}
 
 
-		async void PromptCommand(InputType inputType) {
-			var msg = $"Enter a {inputType.ToString().ToUpper()} value";
-			//var r = await UserDialogs.Instance.PromptAsync(msg, inputType: inputType);
-			var prompt = UserDialogs
-                .Instance
-                .PromptBuilder()
-                .SetTitle("Prompt!")
-                .SetInputType(inputType)
-				.SetMessage(msg);
+		async Task PromptCommand(InputType inputType) {
+            try {
+			    var msg = $"Enter a {inputType.ToString().ToUpper()} value";
+			    //var r = await UserDialogs.Instance.PromptAsync(msg, inputType: inputType);
+			    var prompt = UserDialogs
+                    .Instance
+                    .PromptBuilder()
+                    .SetTitle("Prompt!")
+                    .SetInputType(inputType)
+				    .SetMessage(msg);
 
-			this.dialog = prompt;
-			var r = await prompt.Request();
-            this.Result(r.Ok
-                ? "OK " + r.Text
-                : "Prompt Cancelled");
+			    this.dialog = prompt;
+			    var r = await prompt.Request();
+                this.Result(r.Ok
+                    ? "OK " + r.Text
+                    : "Prompt Cancelled");
+            }
+            catch (OperationCanceledException) { }
         }
 
 

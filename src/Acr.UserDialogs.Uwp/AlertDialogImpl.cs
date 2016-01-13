@@ -29,7 +29,7 @@ namespace Acr.UserDialogs {
             this.tcs = new TaskCompletionSource<bool>();
             cancelToken?.Register(this.Cancel);
 
-            var dialog = new MessageDialog(this.Message, this.Title);
+            var dialog = new MessageDialog(this.Message, this.Title ?? String.Empty);
             dialog.Commands.Add(new UICommand(this.OkText, x => this.tcs.TrySetResult(true)));
             this.Dispatch(() => this.dialogCancel = dialog.ShowAsync());
 
