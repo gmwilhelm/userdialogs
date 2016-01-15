@@ -20,6 +20,7 @@ namespace Acr.UserDialogs {
 
 
         public override Task<LoginResult> Request(CancellationToken? cancelToken = null) {
+            this.tcs = new TaskCompletionSource<LoginResult>();
             cancelToken?.Register(this.Cancel);
             var dlg = new LoginContentDialog();
 
@@ -39,8 +40,8 @@ namespace Acr.UserDialogs {
                 this.tcs.TrySetResult(new LoginResult(vm.UserName, vm.Password, false))
             );
             dlg.DataContext = vm;
-            this.Dispatch(() => this.dialogCancel = dlg.ShowAsync());
-
+            //this.Dispatch(() => this.dialogCancel = dlg.ShowAsync());
+            this.dialogCancel = dlg.ShowAsync();
             return this.tcs.Task;
         }
     }

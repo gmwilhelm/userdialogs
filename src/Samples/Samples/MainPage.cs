@@ -37,28 +37,28 @@ namespace Samples {
             this.AddPage(
                 "Standard Dialogs",
 				btnAutoDismiss,
-                Btn("Alert", this.Alert()),
-                Btn("ActionSheet", this.ActionSheet),
-                Btn("ActionSheet (async)", this.ActionSheetAsync()),
-                Btn("Confirm", this.Confirm()),
-                Btn("Login", this.Login()),
-	            Btn("Prompt", this.Prompt),
-				Btn("Prompt /w Text/No Cancel", this.PromptWithTextAndNoCancel()),
+                Btn("Alert", () => this.Alert()),
+                Btn("ActionSheet", () => this.ActionSheet()),
+                Btn("ActionSheet (async)", () => this.ActionSheetAsync()),
+                Btn("Confirm", () => this.Confirm()),
+                Btn("Login", () => this.Login()),
+	            Btn("Prompt", () => this.Prompt()),
+				Btn("Prompt /w Text/No Cancel", () => this.PromptWithTextAndNoCancel()),
                 Btn("Error", () => UserDialogs.Instance.ShowError("ERROR!")),
                 Btn("Success", () => UserDialogs.Instance.ShowSuccess("SUCCESS!"))
             );
 
             this.AddPage(
                 "Progress",
-				Btn("Manual Loading", this.ManualLoading),
-	            Btn("Progress", this.Progress),
-	            Btn("Progress (No Cancel)", this.ProgressNoCancel),
+				Btn("Manual Loading", () => this.ManualLoading()),
+	            Btn("Progress", () => this.Progress()),
+	            Btn("Progress (No Cancel)", () => this.ProgressNoCancel()),
 	            Btn("Loading (Black - Default)", () => this.Loading(MaskType.Black)),
                 Btn("Loading (Clear)", () => this.Loading(MaskType.Clear)),
                 Btn("Loading (Gradient iOS)", () => this.Loading(MaskType.Gradient)),
                 Btn("Loading (None)", () => this.Loading(MaskType.Black)),
-	            Btn("Loading (No Cancel)", this.LoadingNoCancel),
-                Btn("Loading to Success", this.LoadingToSuccess)
+	            Btn("Loading (No Cancel)", () => this.LoadingNoCancel()),
+                Btn("Loading to Success", () => this.LoadingToSuccess())
             );
 
             this.AddPage(
@@ -138,12 +138,12 @@ namespace Samples {
         }
 
 
-        static Button Btn(string text, Task action) {
+        static Button Btn(string text, Func<Task> action) {
             return new Button {
                 Text = text,
                 Command = new Command(async () => {
                     try {
-                        await action;
+                        await action();
                     }
                     catch (OperationCanceledException) { }
                 })

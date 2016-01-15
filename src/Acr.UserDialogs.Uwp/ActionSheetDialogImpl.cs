@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Windows.UI.Core;
 
 
 namespace Acr.UserDialogs {
