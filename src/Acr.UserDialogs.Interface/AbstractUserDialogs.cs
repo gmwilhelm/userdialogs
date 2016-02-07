@@ -59,6 +59,18 @@ namespace Acr.UserDialogs {
         }
 
 
+        //      public virtual Task AlertAsync(string message, string title, string okText) {
+        //          var tcs = new TaskCompletionSource<object>();
+        //          this.Alert(new AlertConfig {
+        //              Message = message,
+        //              Title = title,
+        //              OkText = okText ?? AlertConfig.DefaultOkText,
+        //              OnOk = () => tcs.TrySetResult(null)
+        //          });
+        //          return tcs.Task;
+        //      }
+
+
         public virtual Task<bool> ConfirmAsync(string message, string title = null, string okText = null, string cancelText = null, CancellationToken? cancelToken = null) {
             return this.ConfirmBuilder()
                 .SetTitle(title)
@@ -77,12 +89,31 @@ namespace Acr.UserDialogs {
 
 
         public virtual IProgressDialog Loading(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null) {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            var pb = this.ProgressBuilder()
+                .SetTitle(title)
+                .SetCancel(cancelText)
+                ;
+
+            pb.Show();
+
+            return pb;
         }
 
 
         public virtual IProgressDialog Progress(string title = null, Action onCancel = null, string cancelText = null, bool show = true, MaskType? maskType = null) {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            var pb = this.ProgressBuilder()
+                .SetTitle(title)
+                .SetCancel(cancelText)
+                .SetIsDeterministic(true)
+                ;
+
+            pb.Show();
+
+            return pb;
         }
 
 

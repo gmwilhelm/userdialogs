@@ -28,7 +28,7 @@ namespace Acr.UserDialogs {
 
 
         public override IProgressDialog ProgressBuilder() {
-            return null;
+            return new ProgressDialogImpl();
         }
 
 

@@ -1,6 +1,7 @@
 using System;
 using Android.App;
-
+using Utils = Acr.Support.Android.Extensions;
+using AndroidHUD;
 
 namespace Acr.UserDialogs {
 
@@ -15,8 +16,48 @@ namespace Acr.UserDialogs {
 
 
         public override void Show() {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            this.Refresh();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            this.IsVisible = false;
+            Utils.RequestMainThread(() => AndHUD.Shared.Dismiss(this.activity));
+        }
+
+   
+        protected virtual void Refresh()
+        {
+            //if (!this.IsVisible)
+            //    return;
+
+            var txt = this.Title;
+            int p = -1;
+            if (this.IsDeterministic) {
+                p = this.PercentComplete;
+                if (!String.IsNullOrWhiteSpace(txt))
+                    txt += "\n";
+
+                txt += p + "%\n";
+            }
+
+            
+            //if (this.cancelAction != null)
+            //    txt += "\n" + this.cancelText;
+                
+
+            Utils.RequestMainThread(() => AndHUD.Shared.Show(
+                this.activity,
+                txt,
+                p,  
+                this.MaskType.ToNative(),
+                null,
+                null //this.OnCancelClick
+            ));
+        }
+
 
         //      #region IProgressDialog Members
 
@@ -35,6 +76,31 @@ namespace Acr.UserDialogs {
 
         //      public MaskType MaskType { get; set; }
 
+
+        int percentComplete;
+
+        public override int PercentComplete
+        {
+            get
+            {
+                return this.percentComplete;
+            }
+
+            set
+            {
+                if (this.percentComplete == value)
+                    return;
+
+                if (value > 100)
+                    this.percentComplete = 100;
+                else if (value < 0)
+                    this.percentComplete = 0;
+                else
+                    this.percentComplete = value;
+
+                this.Refresh();
+            }
+        }
 
         //      int percentComplete;
         //      public virtual int PercentComplete {

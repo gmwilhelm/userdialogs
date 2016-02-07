@@ -135,6 +135,7 @@
     <Compile Include="Internals\PromptContentDialog.xaml.cs">
       <DependentUpon>PromptContentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgressDialogImpl.cs" />
     <Compile Include="PromptDialogImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToastDialogImpl.cs" />
